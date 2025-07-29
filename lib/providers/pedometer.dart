@@ -186,6 +186,13 @@ class PedometerProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> addDailySteps(int steps) async {
+    dailySteps[_selectedDate] = steps;
+    saveDailySteps(dailySteps);
+    _steps = steps.toString();
+    notifyListeners();
+  }
+
   void _onStepCount(StepCount event) {
     final currentSteps = event.steps;
 

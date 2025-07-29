@@ -39,37 +39,83 @@ class PedometerScreen extends StatelessWidget {
               spacing: 10,
               children: <Widget>[
                 StepsCalendar(),
-                CircularPercentIndicator(
-                  animation: true,
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  circularStrokeCap: CircularStrokeCap.round,
-                  lineWidth: 15,
-                  percent: provider.progress,
-                  startAngle: 200,
-                  radius: 90,
-                  center: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        provider.selectedSteps.toString(),
-                        style: TextStyle(
-                          fontSize: 36,
-                          fontWeight: FontWeight.w600,
-                          color: Theme.of(context).textTheme.bodyMedium?.color,
+                Stack(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      child: CircularPercentIndicator(
+                        animation: true,
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        circularStrokeCap: CircularStrokeCap.round,
+                        lineWidth: 15,
+                        percent: provider.progress,
+                        startAngle: 190,
+                        radius: 90,
+                        center: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              provider.selectedSteps.toString(),
+                              style: TextStyle(
+                                fontSize: 36,
+                                fontWeight: FontWeight.w600,
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodyMedium?.color,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              'Steps out of \n${provider.goalSteps}',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodySmall?.color,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                        progressColor: Colors.lightGreen,
+                      ),
+                    ),
+
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: SizedBox(
+                          height: 40,
+                          width: 40,
+                          child: IconButton(
+                            padding: EdgeInsets.only(top: 2),
+                            onPressed: () => {_stepPopUp(context, provider)},
+                            style: ButtonStyle(
+                              backgroundColor: WidgetStateProperty.all<Color>(
+                                Colors.lightGreen,
+                              ),
+                              shape:
+                                  WidgetStateProperty.all<
+                                    RoundedRectangleBorder
+                                  >(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                  ),
+                            ),
+                            icon: Icon(
+                              Icons.add,
+                              color: Colors.white,
+                              size: 28,
+                            ),
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'Steps out of \n${provider.goalSteps}',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Theme.of(context).textTheme.bodySmall?.color,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                  progressColor: Colors.lightGreen,
+                    ),
+                  ],
                 ),
                 SizedBox(height: 20),
                 Row(
@@ -293,8 +339,9 @@ class PedometerScreen extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
           elevation: 5,
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
@@ -350,6 +397,87 @@ class PedometerScreen extends StatelessWidget {
                         onPressed: () {
                           if (water.isNotEmpty) {
                             provider.updateWater(int.parse(water));
+                            Navigator.of(context).pop();
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _stepPopUp(BuildContext context, provider) {
+    final TextEditingController stepController = TextEditingController();
+    String step = "";
+
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          elevation: 5,
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.lightBlue, width: 3),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.surface,
+                    borderRadius: const BorderRadius.vertical(
+                      bottom: Radius.circular(8),
+                    ),
+                  ),
+                  child: Row(
+                    spacing: 12,
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: stepController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            hintText: 'Enter number of step',
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                            ),
+                          ),
+                          onChanged: (value) {
+                            step = value;
+                          },
+                        ),
+                      ),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          backgroundColor: Colors.lightBlueAccent,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 0,
+                            vertical: 0,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        child: const Text(
+                          'Add',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: () {
+                          if (step.isNotEmpty) {
+                            provider.addDailySteps(int.parse(step));
                             Navigator.of(context).pop();
                           }
                         },
