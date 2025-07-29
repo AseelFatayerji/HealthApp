@@ -172,10 +172,19 @@ class _InfoScreenState extends State<InfoScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 4,
+                            horizontal: 4,
+                          ),
                           width: 120,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
                           child: IntrinsicWidth(
                             child: Row(
+                              spacing: 10,
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Text(
