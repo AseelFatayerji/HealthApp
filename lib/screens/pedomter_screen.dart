@@ -110,10 +110,10 @@ class PedometerScreen extends StatelessWidget {
                                       ),
                                     ),
                               ),
-                              icon: Icon(
-                                Icons.add,
+                              icon: FaIcon(
+                                FontAwesomeIcons.plus,
                                 color: Colors.white,
-                                size: 28,
+                                size: 24,
                               ),
                             ),
                           ),
@@ -306,11 +306,11 @@ class PedometerScreen extends StatelessWidget {
                                         ),
                                       ),
                                 ),
-                                icon: Icon(
-                                  Icons.add,
+                                icon: FaIcon(
+                                  FontAwesomeIcons.plus,
                                   color: Colors.white,
-                                  size: 24,
-                                ),
+                                  size: 20,
+                                )
                               ),
                             ),
                           ],
