@@ -351,30 +351,36 @@ class _CaloriesScreen extends State<CaloriesScreen> {
                       Text(
                         "Today's Meals",
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).textTheme.bodyMedium?.color,
                         ),
                       ),
-                      IconButton(
-                        style: ButtonStyle(
-                          backgroundColor: WidgetStateProperty.all<Color>(
-                            Color.fromARGB(255, 255, 181, 96),
-                          ),
-                          shape:
-                              WidgetStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
+                      SizedBox(
+                        height: 30,
+                        width: 30,
+                        child: IconButton(
+                          padding: EdgeInsets.all(0),
+                          style: ButtonStyle(
+                            backgroundColor: WidgetStateProperty.all<Color>(
+                              Color.fromARGB(255, 255, 181, 96),
+                            ),
+                            shape:
+                                WidgetStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
                                 ),
-                              ),
+                          ),
+                          icon: Icon(Icons.add_rounded, color: Colors.white),
+                          iconSize: 24,
+                          color: Colors.white,
+                          onPressed: () => _popUp(context, provider),
                         ),
-                        icon: Icon(Icons.add_rounded, color: Colors.white),
-                        iconSize: 24,
-                        color: Colors.white,
-                        onPressed: () => _popUp(context, provider),
                       ),
                     ],
                   ),
+                  SizedBox(height: 20,),
                   Expanded(
                     child: ListView.builder(
                       itemCount: foodList.length,

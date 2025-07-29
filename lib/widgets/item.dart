@@ -1,5 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:healthapp/providers/calories.dart';
@@ -151,37 +150,30 @@ Future<void> _popUp(BuildContext context, provider, item) {
           children: [
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 255, 181, 96),
-                borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(20),
-                ),
-              ),
-              child: Center(
-                child: Text(
-                  '${item['name']}',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24,
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              width: double.infinity,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.surface,
-                borderRadius: const BorderRadius.vertical(
-                  bottom: Radius.circular(20),
+                border: Border.all(
+                  color: Color.fromARGB(255, 255, 181, 96),
+                  width: 3,
                 ),
+                borderRadius: BorderRadius.circular(20),
               ),
+
               child: Column(
                 spacing: 10,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  Center(
+                    child: Text(
+                      '${item['name']}',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                      ),
+                    ),
+                  ),
                   SizedBox(
                     child: Row(
                       spacing: 20,
@@ -195,6 +187,7 @@ Future<void> _popUp(BuildContext context, provider, item) {
                         Expanded(
                           child: TextField(
                             controller: calorieController,
+                            textAlign: TextAlign.right,
                             decoration: InputDecoration(
                               isDense: true,
                               contentPadding: EdgeInsets.symmetric(
@@ -232,6 +225,7 @@ Future<void> _popUp(BuildContext context, provider, item) {
                         Expanded(
                           child: TextField(
                             controller: proteinController,
+                            textAlign: TextAlign.right,
                             decoration: InputDecoration(
                               isDense: true,
                               contentPadding: EdgeInsets.symmetric(
@@ -266,6 +260,7 @@ Future<void> _popUp(BuildContext context, provider, item) {
                         Expanded(
                           child: TextField(
                             controller: carbController,
+                            textAlign: TextAlign.right,
                             decoration: InputDecoration(
                               isDense: true,
                               contentPadding: EdgeInsets.symmetric(
@@ -300,6 +295,7 @@ Future<void> _popUp(BuildContext context, provider, item) {
                         Expanded(
                           child: TextField(
                             controller: fatController,
+                            textAlign: TextAlign.right,
                             decoration: InputDecoration(
                               isDense: true,
                               contentPadding: EdgeInsets.symmetric(
@@ -324,6 +320,7 @@ Future<void> _popUp(BuildContext context, provider, item) {
                       ],
                     ),
                   ),
+                  SizedBox(height: 10),
                   TextButton(
                     style: TextButton.styleFrom(
                       backgroundColor: Color.fromARGB(255, 255, 181, 96),
@@ -334,7 +331,11 @@ Future<void> _popUp(BuildContext context, provider, item) {
                     ),
                     child: const Text(
                       'Update',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                      ),
                     ),
                     onPressed: () async {
                       provider.updateMeal(
