@@ -310,7 +310,7 @@ class PedometerScreen extends StatelessWidget {
                                   FontAwesomeIcons.plus,
                                   color: Colors.white,
                                   size: 20,
-                                )
+                                ),
                               ),
                             ),
                           ],
@@ -437,7 +437,7 @@ class PedometerScreen extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.lightBlue, width: 3),
+              border: Border.all(color: Colors.lightGreen, width: 3),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Column(
@@ -472,7 +472,7 @@ class PedometerScreen extends StatelessWidget {
                       ),
                       TextButton(
                         style: TextButton.styleFrom(
-                          backgroundColor: Colors.lightBlueAccent,
+                          backgroundColor: Colors.lightGreen,
                           padding: const EdgeInsets.symmetric(
                             horizontal: 0,
                             vertical: 0,
