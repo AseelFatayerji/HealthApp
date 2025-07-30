@@ -212,7 +212,9 @@ class _InfoScreenState extends State<InfoScreen> {
                                           width: 120,
                                           decoration: BoxDecoration(
                                             border: Border.all(
-                                              color: Colors.white,
+                                              color: Theme.of(
+                                                context,
+                                              ).splashColor,
                                             ),
                                             borderRadius: BorderRadius.circular(
                                               5,
