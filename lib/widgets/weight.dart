@@ -21,13 +21,13 @@ class WeightMenu extends StatelessWidget {
             children: [
               TextButton(
                 onPressed: () {
-                  provider.updateGender("Female");
+                  provider.updateWeightUnit("Kg");
                 },
                 child: Text("Kg"),
               ),
               TextButton(
                 onPressed: () {
-                  provider.updateGender("Male");
+                  provider.updateWeightUnit("Lb");
                 },
                 child: Text("Lb"),
               ),
