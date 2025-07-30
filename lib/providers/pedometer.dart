@@ -17,11 +17,16 @@ class PedometerProvider extends ChangeNotifier {
   double _burned = 0;
   double get burned => _burned;
 
-  double _weightKg = 67;
-  double get weightKg => _weightKg;
+  String _weightUnit = "Kg";
+  String get weightUnit => _weightUnit;
 
-  double _height = 130;
-  double get height => _height;
+  double _weightKg = 67;
+  double get weightKg => _weightUnit == "Kg" ? _weightKg : _weightKg / 2.205;
+
+  String _heightUnit = "Kg";
+  String get heightUnit => _heightUnit;
+
+  double _height = 1;
 
   String _gender = "Female";
   String get gender => _gender;
@@ -75,7 +80,7 @@ class PedometerProvider extends ChangeNotifier {
 
   Future<void> _loadWeight() async {
     final prefs = await SharedPreferences.getInstance();
-    _weightKg = prefs.getDouble('weight') ?? 1000.0;
+    _weightKg = prefs.getDouble('weight') ?? 100.0;
     notifyListeners();
   }
 
@@ -83,6 +88,13 @@ class PedometerProvider extends ChangeNotifier {
     _weightKg = newWeight;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setDouble('weight', newWeight.toDouble());
+    notifyListeners();
+  }
+
+  Future<void> updateWeightUnit(String newUnit) async {
+    _weightUnit = newUnit;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('weightUnit', newUnit);
     notifyListeners();
   }
 
@@ -96,6 +108,13 @@ class PedometerProvider extends ChangeNotifier {
     _height = newHeight;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setDouble('height', newHeight.toDouble());
+    notifyListeners();
+  }
+
+  Future<void> updateHeightUnit(String newUnit) async {
+    _heightUnit = newUnit;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('heighttUnit', newUnit);
     notifyListeners();
   }
 
@@ -228,6 +247,16 @@ class PedometerProvider extends ChangeNotifier {
 
   DateTime get selectedDate {
     return _selectedDate;
+  }
+
+  double get height {
+    if (_heightUnit == "cm") {
+      return _height / 100;
+    } else if (_heightUnit == "feet") {
+      return _height / 3.281;
+    } else {
+      return _height;
+    }
   }
 
   double get strideLength {
