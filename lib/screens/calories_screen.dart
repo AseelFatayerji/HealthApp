@@ -763,118 +763,103 @@ class _CaloriesScreen extends State<CaloriesScreen> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          insetPadding: const EdgeInsets.all(20),
           elevation: 5,
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              return ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxHeight: MediaQuery.of(context).size.height * 0.85,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Color.fromARGB(255, 255, 181, 96),
+                    width: 3,
+                  ),
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        border: Border.all(
+                child: Center(
+                  child: Column(
+                    spacing: 10,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+                        width: double.infinity,
+                        decoration: BoxDecoration(
                           color: Color.fromARGB(255, 255, 181, 96),
-                          width: 3,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Center(
-                        child: Column(
-                          spacing: 10,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Container(
-                              padding: EdgeInsets.only(
-                                top: 10,
-                                left: 10,
-                                right: 10,
-                              ),
-                              width: double.infinity,
+                              width: 80,
+                              padding: EdgeInsets.all(2),
                               decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 255, 181, 96),
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10),
+                                color: selected == 0
+                                    ? Theme.of(context).colorScheme.surface
+                                    : Color.fromARGB(255, 255, 181, 96),
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(10),
                                 ),
                               ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Container(
-                                    width: 80,
-                                    padding: EdgeInsets.all(2),
-                                    decoration: BoxDecoration(
-                                      color: selected == 0
-                                          ? Colors.transparent
-                                          : Color.fromARGB(255, 255, 181, 96),
-                                      borderRadius: BorderRadius.vertical(
-                                        top: Radius.circular(10),
-                                      ),
-                                    ),
-                                    child: IconButton(
-                                      onPressed: () {
-                                        selected = 0;
-                                      },
-                                      icon: FaIcon(FontAwesomeIcons.robot),
-                                    ),
-                                  ),
-
-                                  Container(
-                                    width: 80,
-                                    padding: EdgeInsets.all(2),
-                                    decoration: BoxDecoration(
-                                      color: selected == 1
-                                          ? Colors.transparent
-                                          : Color.fromARGB(255, 255, 181, 96),
-                                      borderRadius: BorderRadius.vertical(
-                                        top: Radius.circular(10),
-                                      ),
-                                    ),
-                                    child: IconButton(
-                                      onPressed: () {
-                                        selected = 1;
-                                      },
-                                      icon: Icon(Icons.text_snippet_outlined),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 80,
-                                    padding: EdgeInsets.all(2),
-                                    decoration: BoxDecoration(
-                                      color: selected == 2
-                                          ? Colors.transparent
-                                          : Color.fromARGB(255, 255, 181, 96),
-                                      borderRadius: BorderRadius.vertical(
-                                        top: Radius.circular(10),
-                                      ),
-                                    ),
-                                    child: IconButton(
-                                      onPressed: () {
-                                        selected = 2;
-                                      },
-                                      icon: FaIcon(FontAwesomeIcons.image),
-                                    ),
-                                  ),
-                                ],
+                              child: IconButton(
+                                onPressed: () {
+                                  selected = 0;
+                                },
+                                icon: FaIcon(FontAwesomeIcons.robot),
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsetsGeometry.all(15),
-                              child: options[selected],
+
+                            Container(
+                              width: 80,
+                              padding: EdgeInsets.all(2),
+                              decoration: BoxDecoration(
+                                color: selected == 1
+                                    ? Theme.of(context).colorScheme.surface
+                                    : Color.fromARGB(255, 255, 181, 96),
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(10),
+                                ),
+                              ),
+                              child: IconButton(
+                                onPressed: () {
+                                  selected = 1;
+                                },
+                                icon: Icon(Icons.text_snippet_outlined),
+                              ),
+                            ),
+                            Container(
+                              width: 80,
+                              padding: EdgeInsets.all(2),
+                              decoration: BoxDecoration(
+                                color: selected == 2
+                                    ? Theme.of(context).colorScheme.surface
+                                    : Color.fromARGB(255, 255, 181, 96),
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(10),
+                                ),
+                              ),
+                              child: IconButton(
+                                onPressed: () {
+                                  selected = 2;
+                                },
+                                icon: FaIcon(FontAwesomeIcons.image),
+                              ),
                             ),
                           ],
                         ),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: EdgeInsetsGeometry.all(15),
+                        child: options[selected],
+                      ),
+                    ],
+                  ),
                 ),
-              );
-            },
+              ),
+            ],
           ),
         );
       },
