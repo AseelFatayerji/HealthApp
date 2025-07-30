@@ -246,7 +246,6 @@ class _InfoScreenState extends State<InfoScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Row(
-                                          spacing: 10,
                                           children: [
                                             Icon(
                                               Icons.scale_outlined,
@@ -255,6 +254,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                                 context,
                                               ).textTheme.bodyMedium?.color,
                                             ),
+                                            const SizedBox(width: 8),
                                             Text(
                                               'Weight',
                                               style: TextStyle(
@@ -266,8 +266,12 @@ class _InfoScreenState extends State<InfoScreen> {
                                             ),
                                           ],
                                         ),
+
                                         Container(
                                           width: 120,
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 4,
+                                          ),
                                           decoration: BoxDecoration(
                                             border: Border.all(
                                               color: Theme.of(
@@ -279,9 +283,8 @@ class _InfoScreenState extends State<InfoScreen> {
                                             ),
                                           ),
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.end,
                                             children: [
-                                              IntrinsicWidth(
+                                              Expanded(
                                                 child: TextField(
                                                   controller: _weightController,
                                                   keyboardType:
@@ -293,13 +296,11 @@ class _InfoScreenState extends State<InfoScreen> {
                                                         .bodyMedium
                                                         ?.color,
                                                   ),
-
                                                   decoration: InputDecoration(
                                                     isDense: true,
                                                     contentPadding:
-                                                        EdgeInsets.symmetric(
+                                                        const EdgeInsets.symmetric(
                                                           vertical: 4,
-                                                          horizontal: 4,
                                                         ),
                                                     border: InputBorder.none,
                                                     hintText:
@@ -323,21 +324,16 @@ class _InfoScreenState extends State<InfoScreen> {
                                                   },
                                                 ),
                                               ),
-                                              IntrinsicWidth(
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.end,
-                                                  children: [
-                                                    Text(
-                                                      providerP.weightUnit,
-                                                      style: const TextStyle(
-                                                        fontSize: 18,
-                                                      ),
-                                                    ),
-                                                    WeightMenu(),
-                                                  ],
+
+                                              const SizedBox(width: 4),
+
+                                              Text(
+                                                providerP.weightUnit,
+                                                style: const TextStyle(
+                                                  fontSize: 16,
                                                 ),
                                               ),
+                                              WeightMenu(),
                                             ],
                                           ),
                                         ),
@@ -384,7 +380,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.end,
                                             children: [
-                                              IntrinsicWidth(
+                                              Expanded(
                                                 child: TextField(
                                                   controller: _heightController,
                                                   keyboardType:
@@ -426,20 +422,18 @@ class _InfoScreenState extends State<InfoScreen> {
                                                   },
                                                 ),
                                               ),
-                                              IntrinsicWidth(
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.end,
-                                                  children: [
-                                                    Text(
-                                                      providerP.heightUnit,
-                                                      style: const TextStyle(
-                                                        fontSize: 18,
-                                                      ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: [
+                                                  Text(
+                                                    providerP.heightUnit,
+                                                    style: const TextStyle(
+                                                      fontSize: 16,
                                                     ),
-                                                    HeightMenu(),
-                                                  ],
-                                                ),
+                                                  ),
+                                                  HeightMenu(),
+                                                ],
                                               ),
                                             ],
                                           ),
