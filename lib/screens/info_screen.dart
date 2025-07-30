@@ -179,9 +179,9 @@ class _InfoScreenState extends State<InfoScreen> {
                                       children: [
                                         Row(
                                           children: [
-                                            Icon(
-                                              Icons.push_pin_outlined,
-                                              size: 24,
+                                            FaIcon(
+                                              FontAwesomeIcons.flagUsa,
+                                              size: 20,
                                               color: Theme.of(
                                                 context,
                                               ).textTheme.bodyMedium?.color,
