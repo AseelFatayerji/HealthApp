@@ -211,7 +211,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                             vertical: 4,
                                             horizontal: 4,
                                           ),
-                                          width: 125,
+                                          width: 120,
                                           decoration: BoxDecoration(
                                             border: Border.all(
                                               color: Theme.of(
@@ -266,37 +266,22 @@ class _InfoScreenState extends State<InfoScreen> {
                                             ),
                                           ],
                                         ),
-                                        Row(
-                                          children: [
-                                            Container(
-                                              width: 77,
-                                              decoration: BoxDecoration(
-                                                border: Border(
-                                                  top: BorderSide(
-                                                    color: Theme.of(
-                                                      context,
-                                                    ).splashColor,
-                                                  ),
-                                                  left: BorderSide(
-                                                    color: Theme.of(
-                                                      context,
-                                                    ).splashColor,
-                                                  ),
-                                                  bottom: BorderSide(
-                                                    color: Theme.of(
-                                                      context,
-                                                    ).splashColor,
-                                                  ),
-                                                  right: BorderSide.none,
-                                                ),
-                                                borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(4),
-                                                  bottomLeft: Radius.circular(
-                                                    4,
-                                                  ),
-                                                ),
-                                              ),
-                                              child: IntrinsicWidth(
+                                        Container(
+                                          width: 120,
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: Theme.of(
+                                                context,
+                                              ).splashColor,
+                                            ),
+                                            borderRadius: BorderRadius.circular(
+                                              4,
+                                            ),
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            children: [
+                                              IntrinsicWidth(
                                                 child: TextField(
                                                   controller: _weightController,
                                                   keyboardType:
@@ -338,39 +323,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                                   },
                                                 ),
                                               ),
-                                            ),
-                                            Container(
-                                              padding: EdgeInsets.symmetric(
-                                                vertical: 3,
-                                                horizontal: 3,
-                                              ),
-                                              decoration: BoxDecoration(
-                                                border: Border(
-                                                  top: BorderSide(
-                                                    color: Theme.of(
-                                                      context,
-                                                    ).splashColor,
-                                                  ),
-                                                  right: BorderSide(
-                                                    color: Theme.of(
-                                                      context,
-                                                    ).splashColor,
-                                                  ),
-                                                  bottom: BorderSide(
-                                                    color: Theme.of(
-                                                      context,
-                                                    ).splashColor,
-                                                  ),
-                                                  left: BorderSide.none,
-                                                ),
-                                                borderRadius: BorderRadius.only(
-                                                  topRight: Radius.circular(4),
-                                                  bottomRight: Radius.circular(
-                                                    4,
-                                                  ),
-                                                ),
-                                              ),
-                                              child: IntrinsicWidth(
+                                              IntrinsicWidth(
                                                 child: Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.end,
@@ -385,8 +338,8 @@ class _InfoScreenState extends State<InfoScreen> {
                                                   ],
                                                 ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -415,37 +368,23 @@ class _InfoScreenState extends State<InfoScreen> {
                                             ),
                                           ],
                                         ),
-                                        Row(
-                                          children: [
-                                            Container(
-                                              width: 83,
-                                              decoration: BoxDecoration(
-                                                border: Border(
-                                                  top: BorderSide(
-                                                    color: Theme.of(
-                                                      context,
-                                                    ).splashColor,
-                                                  ),
-                                                  left: BorderSide(
-                                                    color: Theme.of(
-                                                      context,
-                                                    ).splashColor,
-                                                  ),
-                                                  bottom: BorderSide(
-                                                    color: Theme.of(
-                                                      context,
-                                                    ).splashColor,
-                                                  ),
-                                                  right: BorderSide.none,
-                                                ),
-                                                borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(4),
-                                                  bottomLeft: Radius.circular(
-                                                    4,
-                                                  ),
-                                                ),
-                                              ),
-                                              child: IntrinsicWidth(
+                                        Container(
+                                          width: 120,
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: Theme.of(
+                                                context,
+                                              ).splashColor,
+                                            ),
+                                            borderRadius: BorderRadius.circular(
+                                              4,
+                                            ),
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              IntrinsicWidth(
                                                 child: TextField(
                                                   controller: _heightController,
                                                   keyboardType:
@@ -487,45 +426,13 @@ class _InfoScreenState extends State<InfoScreen> {
                                                   },
                                                 ),
                                               ),
-                                            ),
-                                            Container(
-                                              padding: EdgeInsets.symmetric(
-                                                vertical: 3,
-                                                horizontal: 3,
-                                              ),
-                                              decoration: BoxDecoration(
-                                                border: Border(
-                                                  top: BorderSide(
-                                                    color: Theme.of(
-                                                      context,
-                                                    ).splashColor,
-                                                  ),
-                                                  right: BorderSide(
-                                                    color: Theme.of(
-                                                      context,
-                                                    ).splashColor,
-                                                  ),
-                                                  bottom: BorderSide(
-                                                    color: Theme.of(
-                                                      context,
-                                                    ).splashColor,
-                                                  ),
-                                                  left: BorderSide.none,
-                                                ),
-                                                borderRadius: BorderRadius.only(
-                                                  topRight: Radius.circular(4),
-                                                  bottomRight: Radius.circular(
-                                                    4,
-                                                  ),
-                                                ),
-                                              ),
-                                              child: IntrinsicWidth(
+                                              IntrinsicWidth(
                                                 child: Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.end,
                                                   children: [
                                                     Text(
-                                                      "m",
+                                                      providerP.heightUnit,
                                                       style: const TextStyle(
                                                         fontSize: 18,
                                                       ),
@@ -534,8 +441,8 @@ class _InfoScreenState extends State<InfoScreen> {
                                                   ],
                                                 ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -566,7 +473,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                           ],
                                         ),
                                         SizedBox(
-                                          width: 125,
+                                          width: 120,
                                           child: IntrinsicWidth(
                                             child: TextField(
                                               controller: _calorieController,
@@ -634,7 +541,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                           ],
                                         ),
                                         SizedBox(
-                                          width: 125,
+                                          width: 120,
                                           child: IntrinsicWidth(
                                             child: TextField(
                                               textAlign: TextAlign.center,
