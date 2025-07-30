@@ -798,7 +798,7 @@ class _CaloriesScreen extends State<CaloriesScreen> {
                               padding: EdgeInsets.all(2),
                               decoration: BoxDecoration(
                                 color: selected == 0
-                                    ? Colors.grey.shade800
+                                    ? Colors.transparent
                                     : Color.fromARGB(255, 255, 181, 96),
                                 borderRadius: BorderRadius.vertical(
                                   top: Radius.circular(10),
@@ -817,7 +817,7 @@ class _CaloriesScreen extends State<CaloriesScreen> {
                               padding: EdgeInsets.all(2),
                               decoration: BoxDecoration(
                                 color: selected == 1
-                                    ? Colors.grey.shade800
+                                    ? Colors.transparent
                                     : Color.fromARGB(255, 255, 181, 96),
                                 borderRadius: BorderRadius.vertical(
                                   top: Radius.circular(10),
@@ -835,7 +835,7 @@ class _CaloriesScreen extends State<CaloriesScreen> {
                               padding: EdgeInsets.all(2),
                               decoration: BoxDecoration(
                                 color: selected == 2
-                                    ? Colors.grey.shade800
+                                    ? Colors.transparent
                                     : Color.fromARGB(255, 255, 181, 96),
                                 borderRadius: BorderRadius.vertical(
                                   top: Radius.circular(10),
