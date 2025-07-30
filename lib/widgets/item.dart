@@ -5,6 +5,7 @@ import 'package:healthapp/providers/calories.dart';
 import 'package:provider/provider.dart';
 
 class FoodItem extends StatelessWidget {
+  // ignore: prefer_typing_uninitialized_variables, strict_top_level_inference
   final item;
   const FoodItem({super.key, required this.item});
   @override

@@ -3,7 +3,9 @@ import 'package:healthapp/providers/pedometer.dart';
 import 'package:popover/popover.dart';
 import 'package:provider/provider.dart';
 
-class selectionmenu extends StatelessWidget {
+class SelectionMenu extends StatelessWidget {
+  const SelectionMenu({super.key});
+
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<PedometerProvider>();

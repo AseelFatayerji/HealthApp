@@ -229,7 +229,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                                     fontSize: 18,
                                                   ),
                                                 ),
-                                                selectionmenu(),
+                                                SelectionMenu(),
                                               ],
                                             ),
                                           ),

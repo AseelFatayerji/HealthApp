@@ -52,7 +52,7 @@ dependencies:
   dotted_border: ^3.1.0
   popover: ^0.3.1
   uuid: ^4.5.1
-  
+
 dependency_overrides:
   characters: ^1.4.1
   material_color_utilities: ^0.13.0
@@ -77,16 +77,19 @@ dev_dependencies:
   flutter_lints: ^6.0.0
 
 flutter_launcher_icons:
-  android: "launcher_icon"
+  android: true
   ios: true
   image_path: "assets/icon/app_icon.png"
   adaptive_icon_background: "#ffffff"
+  remove_alpha_ios: true
 
 flutter_native_splash:
   image: assets/icon/app_icon.png
   color: "#E0FFB8"
   android: true
   ios: true
+  
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
