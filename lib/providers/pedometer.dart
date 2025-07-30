@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 import 'package:pedometer/pedometer.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:units_converter/properties/length.dart';
 import 'package:units_converter/units_converter.dart';
 
 class PedometerProvider extends ChangeNotifier {
@@ -19,6 +18,9 @@ class PedometerProvider extends ChangeNotifier {
   double _burned = 0;
   double get burned => _burned;
 
+  double _temp = 20;
+  double get temp => _temp;
+
   String _weightUnit = "Kg";
   String get weightUnit => _weightUnit;
 
@@ -30,7 +32,7 @@ class PedometerProvider extends ChangeNotifier {
 
   double _height = 1;
   double get height => _height;
-  
+
   String _gender = "Female";
   String get gender => _gender;
 
@@ -48,6 +50,7 @@ class PedometerProvider extends ChangeNotifier {
     _loadHeight();
     _loadWeight();
     _loadGender();
+    _loadBurned();
     _loadWater();
     loadDailySteps();
     getCurrentTemperature();
@@ -62,7 +65,7 @@ class PedometerProvider extends ChangeNotifier {
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         final temp = data['currentConditions']?['temp'];
-        caloriesBurned(temp);
+        _temp = temp;
       } else {
         print('Failed to fetch temperature');
       }
@@ -84,6 +87,23 @@ class PedometerProvider extends ChangeNotifier {
   Future<void> _loadWeight() async {
     final prefs = await SharedPreferences.getInstance();
     _weightKg = prefs.getDouble('weight') ?? 100.0;
+    notifyListeners();
+  }
+
+  Future<void> _loadBurned() async {
+    final prefs = await SharedPreferences.getInstance();
+    final dateKey =
+        "${_selectedDate.year}-${_selectedDate.month}-${_selectedDate.day}-burned";
+    _burned = prefs.getDouble(dateKey) ?? 0;
+    notifyListeners();
+  }
+
+  Future<void> updateBurned(double newBurned) async {
+    _burned = newBurned;
+    final prefs = await SharedPreferences.getInstance();
+    final dateKey =
+        "${_selectedDate.year}-${_selectedDate.month}-${_selectedDate.day}-burned";
+    await prefs.setDouble(dateKey, _burned);
     notifyListeners();
   }
 
@@ -217,6 +237,7 @@ class PedometerProvider extends ChangeNotifier {
 
   Future<void> updateSelectedDate(DateTime date) async {
     _selectedDate = DateTime(date.year, date.month, date.day);
+    caloriesBurned(_temp);
     await _loadWater();
     notifyListeners();
   }
@@ -234,6 +255,7 @@ class PedometerProvider extends ChangeNotifier {
     _lastUpdatedDate = today;
     _steps = stepCount.toString();
     NotificationService().showNotification(_steps, ongoing: true);
+    caloriesBurned(_temp);
     notifyListeners();
   }
 
@@ -261,8 +283,9 @@ class PedometerProvider extends ChangeNotifier {
 
   Future<void> addDailySteps(int steps) async {
     dailySteps[_selectedDate] = steps;
-    saveDailySteps(dailySteps);
     _steps = steps.toString();
+    saveDailySteps(dailySteps);
+    caloriesBurned(_temp);
     notifyListeners();
   }
 
@@ -272,8 +295,9 @@ class PedometerProvider extends ChangeNotifier {
     final today = DateTime.now();
     final normalizedDate = DateTime(today.year, today.month, today.day);
     dailySteps[normalizedDate] = currentSteps;
-    saveDailySteps(dailySteps);
     _steps = currentSteps.toString();
+    saveDailySteps(dailySteps);
+    caloriesBurned(_temp);
     notifyListeners();
   }
 
@@ -302,22 +326,22 @@ class PedometerProvider extends ChangeNotifier {
     return _selectedDate;
   }
 
-
   double get strideLength {
     double k = _gender == 'Female' ? 0.413 : 0.415;
     if (_heightUnit == "cm") {
-      return (_height / 100) * k;
+      return (height / 100) * k;
     } else if (_heightUnit == "feet") {
-      return (_height / 3.281) * k;
+      return (height / 3.281) * k;
     } else {
-      return _height * k;
+      return height * k;
     }
   }
 
   double get distanceKm {
     final stepCount = selectedSteps;
-    final totalDistance = (stepCount * strideLength) / 1000;
-    return totalDistance.roundToDouble();
+    final totalDistance = (stepCount * strideLength.round()) / 1000;
+    print(stepCount * strideLength.round());
+    return double.parse(totalDistance.toStringAsFixed(2));
   }
 
   double get progress {
@@ -329,23 +353,22 @@ class PedometerProvider extends ChangeNotifier {
   void caloriesBurned(double temperature) {
     if (_weightUnit == "Kg") {
       double baseCalories = distanceKm * weightKg * 1.036;
-
       double tempFactor = 1.0;
       if (temperature > 25 || temperature < 10) {
         tempFactor = 1.1;
       }
-      _burned = baseCalories * tempFactor;
+      updateBurned(baseCalories * tempFactor);
     } else {
       double baseCalories = distanceKm * (weightKg / 3.281) * 1.036;
       double tempFactor = 1.0;
       if (temperature > 25 || temperature < 10) {
         tempFactor = 1.1;
       }
-      _burned = baseCalories * tempFactor;
+      updateBurned(baseCalories * tempFactor);
     }
   }
 
   double get durationMinutes {
-    return ((distanceKm * 12) / 60);
+    return double.parse(((distanceKm * 12) / 60).toStringAsFixed(2));
   }
 }
