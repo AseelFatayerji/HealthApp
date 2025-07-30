@@ -6,7 +6,7 @@
 		<string>This application tracks your steps</string>
 		<key>UIBackgroundModes</key>
 		<array>
-		<string>processing</string>
+			<string>processing</string>
 		</array>
 		<key>NSCameraUsageDescription</key>
 		<string>This app uses the camera to take pictures.</string>
