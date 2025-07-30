@@ -162,7 +162,7 @@ class PedometerScreen extends StatelessWidget {
                                       ],
                                     ),
                                     Text(
-                                      'Km',
+                                      provider.distanceUnit,
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: Theme.of(
