@@ -376,7 +376,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                                       MainAxisAlignment.end,
                                                   children: [
                                                     Text(
-                                                      "Kg",
+                                                      providerP.weightUnit,
                                                       style: const TextStyle(
                                                         fontSize: 18,
                                                       ),
