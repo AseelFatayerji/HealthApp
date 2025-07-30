@@ -124,10 +124,49 @@ class PedometerProvider extends ChangeNotifier {
   }
 
   Future<void> updateHeightUnit(String newUnit) async {
-    _heightUnit = newUnit;
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('heightUnit', newUnit);
-    notifyListeners();
+    if (newUnit == "cm" && _heightUnit == "m") {
+      _height = _height.convertFromTo(LENGTH.meters, LENGTH.centimeters)!;
+      _heightUnit = newUnit;
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('heightUnit', newUnit);
+      updateHeight(double.parse(_height.toStringAsFixed(2)));
+      notifyListeners();
+    } else if (newUnit == "cm" && _heightUnit == "feet") {
+      _height = _height.convertFromTo(LENGTH.feetUs, LENGTH.centimeters)!;
+      _heightUnit = newUnit;
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('heightUnit', newUnit);
+      updateHeight(double.parse(_height.toStringAsFixed(2)));
+      notifyListeners();
+    } else if (newUnit == "m" && _heightUnit == "cm") {
+      _height = _height.convertFromTo(LENGTH.centimeters, LENGTH.meters)!;
+      _heightUnit = newUnit;
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('heightUnit', newUnit);
+      updateHeight(double.parse(_height.toStringAsFixed(2)));
+      notifyListeners();
+    } else if (newUnit == "m" && _heightUnit == "feet") {
+      _height = _height.convertFromTo(LENGTH.feetUs, LENGTH.centimeters)!;
+      _heightUnit = newUnit;
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('heightUnit', newUnit);
+      updateHeight(double.parse(_height.toStringAsFixed(2)));
+      notifyListeners();
+    } else if (newUnit == "feet" && _heightUnit == "cm") {
+      _height = _height.convertFromTo(LENGTH.centimeters, LENGTH.feetUs)!;
+      _heightUnit = newUnit;
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('heightUnit', newUnit);
+      updateHeight(double.parse(_height.toStringAsFixed(2)));
+      notifyListeners();
+    } else {
+      _height = _height.convertFromTo(LENGTH.meters, LENGTH.feetUs)!;
+      _heightUnit = newUnit;
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('heightUnit', newUnit);
+      updateHeight(double.parse(_height.toStringAsFixed(2)));
+      notifyListeners();
+    }
   }
 
   Future<void> _loadGender() async {
