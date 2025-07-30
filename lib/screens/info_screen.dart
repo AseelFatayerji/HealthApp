@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:healthapp/providers/info.dart';
+import 'package:healthapp/widgets/height.dart';
 import 'package:healthapp/widgets/menu.dart';
+import 'package:healthapp/widgets/weight.dart';
 import 'package:provider/provider.dart';
 import '../providers/pedometer.dart';
 import '../providers/calories.dart';
@@ -209,7 +211,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                             vertical: 4,
                                             horizontal: 4,
                                           ),
-                                          width: 120,
+                                          width: 125,
                                           decoration: BoxDecoration(
                                             border: Border.all(
                                               color: Theme.of(
@@ -217,7 +219,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                               ).splashColor,
                                             ),
                                             borderRadius: BorderRadius.circular(
-                                              5,
+                                              4,
                                             ),
                                           ),
                                           child: IntrinsicWidth(
@@ -228,7 +230,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                                 Text(
                                                   providerP.gender,
                                                   style: const TextStyle(
-                                                    fontSize: 18,
+                                                    fontSize: 16,
                                                   ),
                                                 ),
                                                 SelectionMenu(),
@@ -264,49 +266,127 @@ class _InfoScreenState extends State<InfoScreen> {
                                             ),
                                           ],
                                         ),
-                                        SizedBox(
-                                          width: 120,
-                                          child: IntrinsicWidth(
-                                            child: TextField(
-                                              controller: _weightController,
-                                              keyboardType:
-                                                  TextInputType.number,
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Theme.of(
-                                                  context,
-                                                ).textTheme.bodyMedium?.color,
-                                              ),
-
-                                              decoration: InputDecoration(
-                                                isDense: true,
-                                                contentPadding:
-                                                    EdgeInsets.symmetric(
-                                                      vertical: 4,
-                                                      horizontal: 4,
-                                                    ),
-                                                border: OutlineInputBorder(),
-                                                hintText:
-                                                    '${providerP.weightKg} Kg',
-                                                hintStyle: TextStyle(
-                                                  color: Theme.of(
-                                                    context,
-                                                  ).textTheme.bodyMedium?.color,
+                                        Row(
+                                          children: [
+                                            Container(
+                                              width: 77,
+                                              decoration: BoxDecoration(
+                                                border: Border(
+                                                  top: BorderSide(
+                                                    color: Theme.of(
+                                                      context,
+                                                    ).splashColor,
+                                                  ),
+                                                  left: BorderSide(
+                                                    color: Theme.of(
+                                                      context,
+                                                    ).splashColor,
+                                                  ),
+                                                  bottom: BorderSide(
+                                                    color: Theme.of(
+                                                      context,
+                                                    ).splashColor,
+                                                  ),
+                                                  right: BorderSide.none,
+                                                ),
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(4),
+                                                  bottomLeft: Radius.circular(
+                                                    4,
+                                                  ),
                                                 ),
                                               ),
-                                              onSubmitted: (value) {
-                                                final parsed = double.tryParse(
-                                                  value,
-                                                );
-                                                if (parsed != null &&
-                                                    parsed > 0) {
-                                                  providerP.updateWeight(
-                                                    parsed,
-                                                  );
-                                                }
-                                              },
+                                              child: IntrinsicWidth(
+                                                child: TextField(
+                                                  controller: _weightController,
+                                                  keyboardType:
+                                                      TextInputType.number,
+                                                  textAlign: TextAlign.right,
+                                                  style: TextStyle(
+                                                    color: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium
+                                                        ?.color,
+                                                  ),
+
+                                                  decoration: InputDecoration(
+                                                    isDense: true,
+                                                    contentPadding:
+                                                        EdgeInsets.symmetric(
+                                                          vertical: 4,
+                                                          horizontal: 4,
+                                                        ),
+                                                    border: InputBorder.none,
+                                                    hintText:
+                                                        '${providerP.weightKg}',
+                                                    hintStyle: TextStyle(
+                                                      color: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium
+                                                          ?.color,
+                                                    ),
+                                                  ),
+                                                  onSubmitted: (value) {
+                                                    final parsed =
+                                                        double.tryParse(value);
+                                                    if (parsed != null &&
+                                                        parsed > 0) {
+                                                      providerP.updateWeight(
+                                                        parsed,
+                                                      );
+                                                    }
+                                                  },
+                                                ),
+                                              ),
                                             ),
-                                          ),
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                vertical: 3,
+                                                horizontal: 3,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                border: Border(
+                                                  top: BorderSide(
+                                                    color: Theme.of(
+                                                      context,
+                                                    ).splashColor,
+                                                  ),
+                                                  right: BorderSide(
+                                                    color: Theme.of(
+                                                      context,
+                                                    ).splashColor,
+                                                  ),
+                                                  bottom: BorderSide(
+                                                    color: Theme.of(
+                                                      context,
+                                                    ).splashColor,
+                                                  ),
+                                                  left: BorderSide.none,
+                                                ),
+                                                borderRadius: BorderRadius.only(
+                                                  topRight: Radius.circular(4),
+                                                  bottomRight: Radius.circular(
+                                                    4,
+                                                  ),
+                                                ),
+                                              ),
+                                              child: IntrinsicWidth(
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  children: [
+                                                    Text(
+                                                      "Kg",
+                                                      style: const TextStyle(
+                                                        fontSize: 18,
+                                                      ),
+                                                    ),
+                                                    WeightMenu(),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
@@ -335,49 +415,127 @@ class _InfoScreenState extends State<InfoScreen> {
                                             ),
                                           ],
                                         ),
-                                        SizedBox(
-                                          width: 120,
-                                          child: IntrinsicWidth(
-                                            child: TextField(
-                                              controller: _heightController,
-                                              keyboardType:
-                                                  TextInputType.number,
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Theme.of(
-                                                  context,
-                                                ).textTheme.bodyMedium?.color,
-                                              ),
-
-                                              decoration: InputDecoration(
-                                                isDense: true,
-                                                contentPadding:
-                                                    EdgeInsets.symmetric(
-                                                      vertical: 4,
-                                                      horizontal: 4,
-                                                    ),
-                                                border: OutlineInputBorder(),
-                                                hintText:
-                                                    '${providerP.height} m',
-                                                hintStyle: TextStyle(
-                                                  color: Theme.of(
-                                                    context,
-                                                  ).textTheme.bodyMedium?.color,
+                                        Row(
+                                          children: [
+                                            Container(
+                                              width: 83,
+                                              decoration: BoxDecoration(
+                                                border: Border(
+                                                  top: BorderSide(
+                                                    color: Theme.of(
+                                                      context,
+                                                    ).splashColor,
+                                                  ),
+                                                  left: BorderSide(
+                                                    color: Theme.of(
+                                                      context,
+                                                    ).splashColor,
+                                                  ),
+                                                  bottom: BorderSide(
+                                                    color: Theme.of(
+                                                      context,
+                                                    ).splashColor,
+                                                  ),
+                                                  right: BorderSide.none,
+                                                ),
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(4),
+                                                  bottomLeft: Radius.circular(
+                                                    4,
+                                                  ),
                                                 ),
                                               ),
-                                              onSubmitted: (value) {
-                                                final parsed = double.tryParse(
-                                                  value,
-                                                );
-                                                if (parsed != null &&
-                                                    parsed > 0) {
-                                                  providerP.updateHeight(
-                                                    parsed,
-                                                  );
-                                                }
-                                              },
+                                              child: IntrinsicWidth(
+                                                child: TextField(
+                                                  controller: _heightController,
+                                                  keyboardType:
+                                                      TextInputType.number,
+                                                  textAlign: TextAlign.right,
+                                                  style: TextStyle(
+                                                    color: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium
+                                                        ?.color,
+                                                  ),
+
+                                                  decoration: InputDecoration(
+                                                    isDense: true,
+                                                    contentPadding:
+                                                        EdgeInsets.symmetric(
+                                                          vertical: 4,
+                                                          horizontal: 4,
+                                                        ),
+                                                    border: InputBorder.none,
+                                                    hintText:
+                                                        '${providerP.height}',
+                                                    hintStyle: TextStyle(
+                                                      color: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium
+                                                          ?.color,
+                                                    ),
+                                                  ),
+                                                  onSubmitted: (value) {
+                                                    final parsed =
+                                                        double.tryParse(value);
+                                                    if (parsed != null &&
+                                                        parsed > 0) {
+                                                      providerP.updateHeight(
+                                                        parsed,
+                                                      );
+                                                    }
+                                                  },
+                                                ),
+                                              ),
                                             ),
-                                          ),
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                vertical: 3,
+                                                horizontal: 3,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                border: Border(
+                                                  top: BorderSide(
+                                                    color: Theme.of(
+                                                      context,
+                                                    ).splashColor,
+                                                  ),
+                                                  right: BorderSide(
+                                                    color: Theme.of(
+                                                      context,
+                                                    ).splashColor,
+                                                  ),
+                                                  bottom: BorderSide(
+                                                    color: Theme.of(
+                                                      context,
+                                                    ).splashColor,
+                                                  ),
+                                                  left: BorderSide.none,
+                                                ),
+                                                borderRadius: BorderRadius.only(
+                                                  topRight: Radius.circular(4),
+                                                  bottomRight: Radius.circular(
+                                                    4,
+                                                  ),
+                                                ),
+                                              ),
+                                              child: IntrinsicWidth(
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  children: [
+                                                    Text(
+                                                      "m",
+                                                      style: const TextStyle(
+                                                        fontSize: 18,
+                                                      ),
+                                                    ),
+                                                    HeightMenu(),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
@@ -408,7 +566,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                           ],
                                         ),
                                         SizedBox(
-                                          width: 120,
+                                          width: 125,
                                           child: IntrinsicWidth(
                                             child: TextField(
                                               controller: _calorieController,
@@ -476,7 +634,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                           ],
                                         ),
                                         SizedBox(
-                                          width: 120,
+                                          width: 125,
                                           child: IntrinsicWidth(
                                             child: TextField(
                                               textAlign: TextAlign.center,
