@@ -29,370 +29,381 @@ class _CaloriesScreen extends State<CaloriesScreen> {
       backgroundColor: Color.fromARGB(255, 255, 181, 96),
       resizeToAvoidBottomInset: true,
       body: SafeArea(
-        child: Stack(
-          children: [
-            Image.asset('assets/icon/Calories.png', height: 140),
-            Container(
-              margin: EdgeInsets.only(top: 120),
-              padding: const EdgeInsets.all(15),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(40),
-                  topRight: Radius.circular(40),
+        child: SingleChildScrollView(
+          child: Stack(
+            children: [
+              Image.asset('assets/icon/Calories.png', height: 140),
+              Container(
+                margin: EdgeInsets.only(top: 120),
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surface,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(40),
+                    topRight: Radius.circular(40),
+                  ),
                 ),
-              ),
-              child: Column(
-                children: [
-                  CaloriesCalender(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 7,
-                      vertical: 5,
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.local_fire_department,
-                          color: Color.fromARGB(255, 255, 181, 96),
-                        ),
-                        Text(
-                          '${provider.goalCalories - calories} Calories left',
-                          style: TextStyle(
-                            color: Theme.of(
-                              context,
-                            ).textTheme.bodyMedium?.color,
-                            fontWeight: FontWeight.bold,
+                child: Column(
+                  children: [
+                    CaloriesCalender(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 7,
+                        vertical: 5,
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.local_fire_department,
+                            color: Color.fromARGB(255, 255, 181, 96),
                           ),
-                          textAlign: TextAlign.left,
+                          Text(
+                            '${provider.goalCalories - calories} Calories left',
+                            style: TextStyle(
+                              color: Theme.of(
+                                context,
+                              ).textTheme.bodyMedium?.color,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                        ],
+                      ),
+                    ),
+                    LinearPercentIndicator(
+                      animation: true,
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      lineHeight: 20,
+                      percent:
+                          1 -
+                          ((provider.goalCalories - calories) /
+                              provider.goalCalories),
+                      barRadius: Radius.circular(10),
+                      progressColor: Color.fromARGB(255, 255, 181, 96),
+                    ),
+                    SizedBox(height: 40),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          spacing: 20,
+                          children: [
+                            Row(
+                              spacing: 10,
+                              children: [
+                                FaIcon(
+                                  FontAwesomeIcons.drumstickBite,
+                                  color: Theme.of(
+                                    context,
+                                  ).textTheme.bodyLarge?.color,
+                                  size: 18,
+                                ),
+                                Text(
+                                  'Protein',
+                                  style: TextStyle(
+                                    color: Theme.of(
+                                      context,
+                                    ).textTheme.bodyMedium?.color,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ],
+                            ),
+                            Row(
+                              spacing: 20,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text(
+                                      '${(provider.goalCalories * 0.2) - protein}',
+                                      style: TextStyle(
+                                        color: Theme.of(
+                                          context,
+                                        ).textTheme.bodyLarge?.color,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                    Text(
+                                      'Kcal',
+                                      style: TextStyle(
+                                        color: Theme.of(
+                                          context,
+                                        ).textTheme.bodySmall?.color,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 8,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ],
+                                ),
+                                CircularPercentIndicator(
+                                  radius: 20,
+                                  animation: true,
+                                  progressColor: Color.fromARGB(
+                                    255,
+                                    141,
+                                    201,
+                                    50,
+                                  ),
+                                  backgroundColor: const Color.fromARGB(
+                                    255,
+                                    208,
+                                    208,
+                                    208,
+                                  ),
+                                  startAngle: 200,
+                                  circularStrokeCap: CircularStrokeCap.round,
+                                  percent:
+                                      (protein / (provider.goalCalories * 0.2))
+                                          .clamp(0.0, 1.0),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Container(
+                          height: 80,
+                          width: 2,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        Column(
+                          spacing: 20,
+                          children: [
+                            Row(
+                              spacing: 20,
+                              children: [
+                                FaIcon(
+                                  FontAwesomeIcons.plateWheat,
+                                  color: Theme.of(
+                                    context,
+                                  ).textTheme.bodyLarge?.color,
+                                  size: 18,
+                                ),
+                                Text(
+                                  'Carbs',
+                                  style: TextStyle(
+                                    color: Theme.of(
+                                      context,
+                                    ).textTheme.bodyMedium?.color,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ],
+                            ),
+                            Row(
+                              spacing: 20,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text(
+                                      '${(provider.goalCalories * 0.6) - carbs}',
+                                      style: TextStyle(
+                                        color: Theme.of(
+                                          context,
+                                        ).textTheme.bodyLarge?.color,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                    Text(
+                                      'Kcal',
+                                      style: TextStyle(
+                                        color: Theme.of(
+                                          context,
+                                        ).textTheme.bodySmall?.color,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 8,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ],
+                                ),
+                                CircularPercentIndicator(
+                                  radius: 20,
+                                  animation: true,
+                                  progressColor: Color.fromARGB(
+                                    255,
+                                    96,
+                                    178,
+                                    255,
+                                  ),
+                                  backgroundColor: const Color.fromARGB(
+                                    255,
+                                    208,
+                                    208,
+                                    208,
+                                  ),
+                                  startAngle: 200,
+                                  circularStrokeCap: CircularStrokeCap.round,
+                                  percent:
+                                      (carbs / (provider.goalCalories * 0.6))
+                                          .clamp(0.0, 1.0),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Container(
+                          height: 80,
+                          width: 2,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        Column(
+                          spacing: 20,
+                          children: [
+                            Row(
+                              spacing: 40,
+                              children: [
+                                FaIcon(
+                                  FontAwesomeIcons.burger,
+                                  color: Theme.of(
+                                    context,
+                                  ).textTheme.bodyLarge?.color,
+                                  size: 18,
+                                ),
+                                Text(
+                                  'Fat',
+                                  style: TextStyle(
+                                    color: Theme.of(
+                                      context,
+                                    ).textTheme.bodyMedium?.color,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ],
+                            ),
+                            Row(
+                              spacing: 20,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text(
+                                      '${(provider.goalCalories * 0.2) - fats}',
+                                      style: TextStyle(
+                                        color: Theme.of(
+                                          context,
+                                        ).textTheme.bodyLarge?.color,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                    Text(
+                                      'Kcal',
+                                      style: TextStyle(
+                                        color: Theme.of(
+                                          context,
+                                        ).textTheme.bodySmall?.color,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 8,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ],
+                                ),
+                                CircularPercentIndicator(
+                                  radius: 20,
+                                  animation: true,
+                                  progressColor: Color.fromARGB(
+                                    255,
+                                    255,
+                                    181,
+                                    96,
+                                  ),
+                                  backgroundColor: const Color.fromARGB(
+                                    255,
+                                    208,
+                                    208,
+                                    208,
+                                  ),
+                                  startAngle: 200,
+                                  circularStrokeCap: CircularStrokeCap.round,
+                                  percent:
+                                      (fats / (provider.goalCalories * 0.2))
+                                          .clamp(0.0, 1.0),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ),
-                  LinearPercentIndicator(
-                    animation: true,
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    lineHeight: 20,
-                    percent:
-                        1 -
-                        ((provider.goalCalories - calories) /
-                            provider.goalCalories),
-                    barRadius: Radius.circular(10),
-                    progressColor: Color.fromARGB(255, 255, 181, 96),
-                  ),
-                  SizedBox(height: 40),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Column(
-                        spacing: 20,
-                        children: [
-                          Row(
-                            spacing: 10,
-                            children: [
-                              FaIcon(
-                                FontAwesomeIcons.drumstickBite,
-                                color: Theme.of(
-                                  context,
-                                ).textTheme.bodyLarge?.color,
-                                size: 18,
-                              ),
-                              Text(
-                                'Protein',
-                                style: TextStyle(
-                                  color: Theme.of(
-                                    context,
-                                  ).textTheme.bodyMedium?.color,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                ),
-                                textAlign: TextAlign.left,
-                              ),
-                            ],
+                    SizedBox(height: 30),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Today's Meals",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(
+                              context,
+                            ).textTheme.bodyMedium?.color,
                           ),
-                          Row(
-                            spacing: 20,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Column(
-                                children: [
-                                  Text(
-                                    '${(provider.goalCalories * 0.2) - protein}',
-                                    style: TextStyle(
-                                      color: Theme.of(
-                                        context,
-                                      ).textTheme.bodyLarge?.color,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
-                                    ),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                  Text(
-                                    'Kcal',
-                                    style: TextStyle(
-                                      color: Theme.of(
-                                        context,
-                                      ).textTheme.bodySmall?.color,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 8,
-                                    ),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ],
-                              ),
-                              CircularPercentIndicator(
-                                radius: 20,
-                                animation: true,
-                                progressColor: Color.fromARGB(
-                                  255,
-                                  141,
-                                  201,
-                                  50,
-                                ),
-                                backgroundColor: const Color.fromARGB(
-                                  255,
-                                  208,
-                                  208,
-                                  208,
-                                ),
-                                startAngle: 200,
-                                circularStrokeCap: CircularStrokeCap.round,
-                                percent:
-                                    (protein / (provider.goalCalories * 0.2))
-                                        .clamp(0.0, 1.0),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Container(
-                        height: 80,
-                        width: 2,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[300],
-                          borderRadius: BorderRadius.circular(10),
                         ),
-                      ),
-                      Column(
-                        spacing: 20,
-                        children: [
-                          Row(
-                            spacing: 20,
-                            children: [
-                              FaIcon(
-                                FontAwesomeIcons.plateWheat,
-                                color: Theme.of(
-                                  context,
-                                ).textTheme.bodyLarge?.color,
-                                size: 18,
+                        SizedBox(
+                          height: 30,
+                          width: 30,
+                          child: IconButton(
+                            padding: EdgeInsets.all(0),
+                            style: ButtonStyle(
+                              backgroundColor: WidgetStateProperty.all<Color>(
+                                Color.fromARGB(255, 255, 181, 96),
                               ),
-                              Text(
-                                'Carbs',
-                                style: TextStyle(
-                                  color: Theme.of(
-                                    context,
-                                  ).textTheme.bodyMedium?.color,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                ),
-                                textAlign: TextAlign.left,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            spacing: 20,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Column(
-                                children: [
-                                  Text(
-                                    '${(provider.goalCalories * 0.6) - carbs}',
-                                    style: TextStyle(
-                                      color: Theme.of(
-                                        context,
-                                      ).textTheme.bodyLarge?.color,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
+                              shape:
+                                  WidgetStateProperty.all<
+                                    RoundedRectangleBorder
+                                  >(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
-                                    textAlign: TextAlign.left,
                                   ),
-                                  Text(
-                                    'Kcal',
-                                    style: TextStyle(
-                                      color: Theme.of(
-                                        context,
-                                      ).textTheme.bodySmall?.color,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 8,
-                                    ),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ],
-                              ),
-                              CircularPercentIndicator(
-                                radius: 20,
-                                animation: true,
-                                progressColor: Color.fromARGB(
-                                  255,
-                                  96,
-                                  178,
-                                  255,
-                                ),
-                                backgroundColor: const Color.fromARGB(
-                                  255,
-                                  208,
-                                  208,
-                                  208,
-                                ),
-                                startAngle: 200,
-                                circularStrokeCap: CircularStrokeCap.round,
-                                percent: (carbs / (provider.goalCalories * 0.6))
-                                    .clamp(0.0, 1.0),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Container(
-                        height: 80,
-                        width: 2,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[300],
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      Column(
-                        spacing: 20,
-                        children: [
-                          Row(
-                            spacing: 40,
-                            children: [
-                              FaIcon(
-                                FontAwesomeIcons.burger,
-                                color: Theme.of(
-                                  context,
-                                ).textTheme.bodyLarge?.color,
-                                size: 18,
-                              ),
-                              Text(
-                                'Fat',
-                                style: TextStyle(
-                                  color: Theme.of(
-                                    context,
-                                  ).textTheme.bodyMedium?.color,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                ),
-                                textAlign: TextAlign.left,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            spacing: 20,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Column(
-                                children: [
-                                  Text(
-                                    '${(provider.goalCalories * 0.2) - fats}',
-                                    style: TextStyle(
-                                      color: Theme.of(
-                                        context,
-                                      ).textTheme.bodyLarge?.color,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
-                                    ),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                  Text(
-                                    'Kcal',
-                                    style: TextStyle(
-                                      color: Theme.of(
-                                        context,
-                                      ).textTheme.bodySmall?.color,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 8,
-                                    ),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ],
-                              ),
-                              CircularPercentIndicator(
-                                radius: 20,
-                                animation: true,
-                                progressColor: Color.fromARGB(
-                                  255,
-                                  255,
-                                  181,
-                                  96,
-                                ),
-                                backgroundColor: const Color.fromARGB(
-                                  255,
-                                  208,
-                                  208,
-                                  208,
-                                ),
-                                startAngle: 200,
-                                circularStrokeCap: CircularStrokeCap.round,
-                                percent: (fats / (provider.goalCalories * 0.2))
-                                    .clamp(0.0, 1.0),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 30),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Today's Meals",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).textTheme.bodyMedium?.color,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 30,
-                        width: 30,
-                        child: IconButton(
-                          padding: EdgeInsets.all(0),
-                          style: ButtonStyle(
-                            backgroundColor: WidgetStateProperty.all<Color>(
-                              Color.fromARGB(255, 255, 181, 96),
                             ),
-                            shape:
-                                WidgetStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
+                            icon: FaIcon(
+                              FontAwesomeIcons.plus,
+                              color: Colors.white,
+                            ),
+                            iconSize: 20,
+                            color: Colors.white,
+                            onPressed: () => _popUp(context, provider),
                           ),
-                          icon: FaIcon(FontAwesomeIcons.plus, color: Colors.white),
-                          iconSize: 20,
-                          color: Colors.white,
-                          onPressed: () => _popUp(context, provider),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20,),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: foodList.length,
-                      itemBuilder: (context, index) {
-                        return FoodItem(item: foodList[index]);
-                      },
+                      ],
                     ),
-                  ),
-                ],
+                    SizedBox(height: 20),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: foodList.length,
+                        itemBuilder: (context, index) {
+                          return FoodItem(item: foodList[index]);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
