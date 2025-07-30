@@ -33,8 +33,6 @@ class CaloriesProvider extends ChangeNotifier {
     _loadForSelectedDate();
   }
   Future<void> _init() async {
-    // SharedPreferences pref = await SharedPreferences.getInstance();
-    // pref.clear();
     notifyListeners();
   }
 
