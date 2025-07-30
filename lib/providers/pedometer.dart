@@ -23,12 +23,14 @@ class PedometerProvider extends ChangeNotifier {
   String get weightUnit => _weightUnit;
 
   double _weightKg = 67;
+  double get weightKg => _weightKg;
 
   String _heightUnit = "Kg";
   String get heightUnit => _heightUnit;
 
   double _height = 1;
-
+  double get height => _height;
+  
   String _gender = "Female";
   String get gender => _gender;
 
@@ -300,29 +302,16 @@ class PedometerProvider extends ChangeNotifier {
     return _selectedDate;
   }
 
-  double get weightKg {
-    if (_weightUnit == "cm") {
-      return (_weightKg / 100).floorToDouble();
-    } else if (_weightUnit == "feet") {
-      return (_weightKg / 3.281).floorToDouble();
-    } else {
-      return _weightKg;
-    }
-  }
-
-  double get height {
-    if (_heightUnit == "cm") {
-      return (_height / 100).floorToDouble();
-    } else if (_heightUnit == "feet") {
-      return (_height / 3.281).floorToDouble();
-    } else {
-      return _height;
-    }
-  }
 
   double get strideLength {
     double k = _gender == 'Female' ? 0.413 : 0.415;
-    return height * k;
+    if (_heightUnit == "cm") {
+      return (_height / 100) * k;
+    } else if (_heightUnit == "feet") {
+      return (_height / 3.281) * k;
+    } else {
+      return _height * k;
+    }
   }
 
   double get distanceKm {
@@ -338,13 +327,22 @@ class PedometerProvider extends ChangeNotifier {
   }
 
   void caloriesBurned(double temperature) {
-    double baseCalories = distanceKm * weightKg * 1.036;
+    if (_weightUnit == "Kg") {
+      double baseCalories = distanceKm * weightKg * 1.036;
 
-    double tempFactor = 1.0;
-    if (temperature > 25 || temperature < 10) {
-      tempFactor = 1.1;
+      double tempFactor = 1.0;
+      if (temperature > 25 || temperature < 10) {
+        tempFactor = 1.1;
+      }
+      _burned = baseCalories * tempFactor;
+    } else {
+      double baseCalories = distanceKm * (weightKg / 3.281) * 1.036;
+      double tempFactor = 1.0;
+      if (temperature > 25 || temperature < 10) {
+        tempFactor = 1.1;
+      }
+      _burned = baseCalories * tempFactor;
     }
-    _burned = baseCalories * tempFactor;
   }
 
   double get durationMinutes {
