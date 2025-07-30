@@ -33,6 +33,9 @@ class PedometerProvider extends ChangeNotifier {
   String _distanceUnit = "Km";
   String get distanceUnit => _distanceUnit;
 
+  bool _UsMetric = false;
+  bool get UsMetric => _UsMetric;
+
   double _height = 1;
   double get height => _height;
 
@@ -101,9 +104,21 @@ class PedometerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateDistancetUnit(String newUnit) async {
-    _distanceUnit = newUnit;
+  Future<void> updateDistancetUnit() async {
+    if (_distanceUnit == "miles") {
+      _distanceUnit = "Km";
+      _UsMetric = false;
+    } else {
+      _distanceUnit = "miles";
+      _UsMetric = true;
+    }
+    savePreference();
     notifyListeners();
+  }
+
+  void savePreference() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('UsMetric', _UsMetric);
   }
 
   Future<void> updateBurned(double newBurned) async {
