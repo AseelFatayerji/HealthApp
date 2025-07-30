@@ -28,7 +28,7 @@ class FoodItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
-            spacing: 10,
+            spacing: 5,
             children: [
               Icon(Icons.restaurant, size: 40, color: Colors.white),
               Column(
@@ -44,7 +44,7 @@ class FoodItem extends StatelessWidget {
                     ),
                   ),
                   Row(
-                    spacing: 20,
+                    spacing: 10,
                     children: [
                       Row(
                         spacing: 5,
@@ -99,7 +99,6 @@ class FoodItem extends StatelessWidget {
             ],
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               SizedBox(
                 width: 30,
