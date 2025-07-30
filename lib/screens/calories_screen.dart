@@ -642,7 +642,6 @@ class _CaloriesScreen extends State<CaloriesScreen> {
                 List<double> values = [cal, p, c, f];
                 await provider.addMeal(provider.selectedDate, name, values);
                 Navigator.of(context).pop();
-                Navigator.of(context).pop();
               },
             ),
           ],
