@@ -6,6 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:pedometer/pedometer.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:units_converter/properties/length.dart';
+import 'package:units_converter/units_converter.dart';
 
 class PedometerProvider extends ChangeNotifier {
   String _steps = '0';
@@ -21,7 +23,6 @@ class PedometerProvider extends ChangeNotifier {
   String get weightUnit => _weightUnit;
 
   double _weightKg = 67;
-  double get weightKg => _weightUnit == "Kg" ? _weightKg : _weightKg / 2.205;
 
   String _heightUnit = "Kg";
   String get heightUnit => _heightUnit;
@@ -92,10 +93,21 @@ class PedometerProvider extends ChangeNotifier {
   }
 
   Future<void> updateWeightUnit(String newUnit) async {
-    _weightUnit = newUnit;
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('weightUnit', newUnit);
-    notifyListeners();
+    if (newUnit == "Kg" && _weightUnit == "Lb") {
+      _weightKg = _weightKg.convertFromTo(MASS.pounds, MASS.kilograms)!;
+      _weightUnit = newUnit;
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('weightUnit', newUnit);
+      updateWeight(double.parse(_weightKg.toStringAsFixed(2)));
+      notifyListeners();
+    } else {
+      _weightKg = _weightKg.convertFromTo(MASS.kilograms, MASS.pounds)!;
+      _weightUnit = newUnit;
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('weightUnit', newUnit);
+      updateWeight(double.parse(_weightKg.toStringAsFixed(2)));
+      notifyListeners();
+    }
   }
 
   Future<void> _loadHeight() async {
@@ -114,7 +126,7 @@ class PedometerProvider extends ChangeNotifier {
   Future<void> updateHeightUnit(String newUnit) async {
     _heightUnit = newUnit;
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('heighttUnit', newUnit);
+    await prefs.setString('heightUnit', newUnit);
     notifyListeners();
   }
 
@@ -249,11 +261,21 @@ class PedometerProvider extends ChangeNotifier {
     return _selectedDate;
   }
 
+  double get weightKg {
+    if (_weightUnit == "cm") {
+      return (_weightKg / 100).floorToDouble();
+    } else if (_weightUnit == "feet") {
+      return (_weightKg / 3.281).floorToDouble();
+    } else {
+      return _weightKg;
+    }
+  }
+
   double get height {
     if (_heightUnit == "cm") {
-      return _height / 100;
+      return (_height / 100).floorToDouble();
     } else if (_heightUnit == "feet") {
-      return _height / 3.281;
+      return (_height / 3.281).floorToDouble();
     } else {
       return _height;
     }
