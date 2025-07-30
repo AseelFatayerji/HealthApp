@@ -30,6 +30,9 @@ class PedometerProvider extends ChangeNotifier {
   String _heightUnit = "Kg";
   String get heightUnit => _heightUnit;
 
+  String _distanceUnit = "Km";
+  String get distanceUnit => _distanceUnit;
+
   double _height = 1;
   double get height => _height;
 
@@ -95,6 +98,11 @@ class PedometerProvider extends ChangeNotifier {
     final dateKey =
         "${_selectedDate.year}-${_selectedDate.month}-${_selectedDate.day}-burned";
     _burned = prefs.getDouble(dateKey) ?? 0;
+    notifyListeners();
+  }
+
+  Future<void> updateDistancetUnit(String newUnit) async {
+    _distanceUnit = newUnit;
     notifyListeners();
   }
 
@@ -340,8 +348,11 @@ class PedometerProvider extends ChangeNotifier {
   double get distanceKm {
     final stepCount = selectedSteps;
     final totalDistance = (stepCount * strideLength.round()) / 1000;
-    print(stepCount * strideLength.round());
-    return double.parse(totalDistance.toStringAsFixed(2));
+    if (_distanceUnit == "Km") {
+      return double.parse(totalDistance.toStringAsFixed(2));
+    } else {
+      return double.parse((totalDistance / 1.609).toStringAsFixed(2));
+    }
   }
 
   double get progress {
