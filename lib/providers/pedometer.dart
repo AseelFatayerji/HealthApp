@@ -41,6 +41,7 @@ class PedometerProvider extends ChangeNotifier {
     _loadWeight();
     _loadGender();
     _loadWater();
+    loadDailySteps();
     getCurrentTemperature();
   }
 
@@ -164,15 +165,6 @@ class PedometerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> saveDailySteps(Map<DateTime, int> dailySteps) async {
-    final prefs = await SharedPreferences.getInstance();
-    final stringMap = dailySteps.map(
-      (key, value) => MapEntry(key.toIso8601String(), value),
-    );
-
-    prefs.setString('dailySteps', jsonEncode(stringMap));
-  }
-
   Future<void> loadDailySteps() async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -184,6 +176,15 @@ class PedometerProvider extends ChangeNotifier {
         (key, value) => MapEntry(DateTime.parse(key), value as int),
       );
     }
+  }
+
+  Future<void> saveDailySteps(Map<DateTime, int> dailySteps) async {
+    final prefs = await SharedPreferences.getInstance();
+    final stringMap = dailySteps.map(
+      (key, value) => MapEntry(key.toIso8601String(), value),
+    );
+
+    prefs.setString('dailySteps', jsonEncode(stringMap));
   }
 
   Future<void> addDailySteps(int steps) async {
