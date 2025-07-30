@@ -23,6 +23,12 @@ class HeightMenu extends StatelessWidget {
                 onPressed: () {
                   provider.updateGender("Female");
                 },
+                child: Text("m"),
+              ),
+              TextButton(
+                onPressed: () {
+                  provider.updateGender("Female");
+                },
                 child: Text("cm"),
               ),
               TextButton(
