@@ -13,7 +13,7 @@ class HeightMenu extends StatelessWidget {
       onTap: () {
         showPopover(
           context: context,
-          height: 100,
+          height: 150,
           width: 120,
           direction: PopoverDirection.top,
           backgroundColor: Theme.of(context).colorScheme.surface,
@@ -21,19 +21,19 @@ class HeightMenu extends StatelessWidget {
             children: [
               TextButton(
                 onPressed: () {
-                  provider.updateGender("Female");
+                  provider.updateHeightUnit("m");
                 },
                 child: Text("m"),
               ),
               TextButton(
                 onPressed: () {
-                  provider.updateGender("Female");
+                  provider.updateHeightUnit("cm");
                 },
                 child: Text("cm"),
               ),
               TextButton(
                 onPressed: () {
-                  provider.updateGender("Male");
+                  provider.updateHeightUnit("feet");
                 },
                 child: Text("feet"),
               ),
