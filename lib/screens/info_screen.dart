@@ -24,11 +24,12 @@ class _InfoScreenState extends State<InfoScreen> {
   final TextEditingController _goalController = TextEditingController();
 
   void _onToggleChanged(bool value) async {
+    final notificationService = NotificationService();
     final provider = context.read<PedometerProvider>();
     final providerI = context.read<InfoProvider>();
     final steps = provider.steps;
-    final notificationService = NotificationService();
     providerI.pin();
+
     if (value) {
       await notificationService.showNotification(steps, ongoing: true);
     } else {
@@ -37,8 +38,12 @@ class _InfoScreenState extends State<InfoScreen> {
   }
 
   void _onToggleDark(bool value) async {
-    final providerI = context.read<InfoProvider>();
-    providerI.toggleTheme();
+    final provider = context.read<InfoProvider>();
+    provider.toggleTheme();
+  }
+    void _onToggleMetric(bool value) async {
+    final provider = context.read<PedometerProvider>();
+    provider.updateDistancetUnit();
   }
 
   @override
@@ -132,7 +137,6 @@ class _InfoScreenState extends State<InfoScreen> {
                                         ),
                                       ],
                                     ),
-
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -169,7 +173,42 @@ class _InfoScreenState extends State<InfoScreen> {
                                         ),
                                       ],
                                     ),
-
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              Icons.push_pin_outlined,
+                                              size: 24,
+                                              color: Theme.of(
+                                                context,
+                                              ).textTheme.bodyMedium?.color,
+                                            ),
+                                            const SizedBox(width: 10),
+                                            Text(
+                                              'US imperial',
+                                              style: TextStyle(
+                                                color: Theme.of(
+                                                  context,
+                                                ).textTheme.bodyMedium?.color,
+                                                fontSize: 20,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        FlutterSwitch(
+                                          width: 50.0,
+                                          height: 25.0,
+                                          activeColor: Colors.deepPurple,
+                                          onToggle: _onToggleMetric,
+                                          value: context
+                                              .watch<PedometerProvider>()
+                                              .UsMetric,
+                                        ),
+                                      ],
+                                    ),
                                     Text(
                                       'User Info',
                                       style: TextStyle(
@@ -180,7 +219,6 @@ class _InfoScreenState extends State<InfoScreen> {
                                         fontWeight: FontWeight.w800,
                                       ),
                                     ),
-
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -240,7 +278,6 @@ class _InfoScreenState extends State<InfoScreen> {
                                         ),
                                       ],
                                     ),
-
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
