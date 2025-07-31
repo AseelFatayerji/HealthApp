@@ -516,7 +516,7 @@ class _CaloriesScreen extends State<CaloriesScreen> {
                     );
                     return;
                   }
-
+                  print(values);
                   await provider.addMeal(provider.selectedDate, name, values);
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
