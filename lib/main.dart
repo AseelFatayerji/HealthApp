@@ -6,11 +6,12 @@ import 'providers/pedometer.dart';
 import 'providers/calories.dart';
 import 'providers/notification_service.dart';
 import 'widgets/navbar.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await NotificationService().initNotificationService();
   await NotificationService().requestNotificationPermission();
-  await dotenv.load();
+  await dotenv.load(fileName: ".env");
 
   runApp(
     MultiProvider(
