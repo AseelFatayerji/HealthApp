@@ -1,7 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:healthapp/widgets/navbar.dart';
-import 'package:lottie/lottie.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -9,11 +8,20 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
-      splash: Column(
-        children: [
-          Center(child: LottieBuilder.asset("assetsSplash Screen.json")),
-        ],
+      splash: MediaQuery.removePadding(
+        context: context,
+        removeTop: true,
+        removeBottom: true,
+        child: SizedBox.expand(
+          child: Image.asset(
+            "assets/icon/Splash_Screen.gif",
+            fit: BoxFit.cover,
+          ),
+        ),
       ),
+      splashIconSize: double.infinity,
+      backgroundColor: Colors.white,
+      duration: 1900,
       nextScreen: Navbar(),
     );
   }
