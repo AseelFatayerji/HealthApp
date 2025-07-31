@@ -78,10 +78,10 @@ class _CaloriesScreen extends State<CaloriesScreen> {
                               context,
                             ).colorScheme.primary,
                             lineHeight: 20,
-                            percent:
-                                1 -
+                            percent:1-
                                 ((provider.goalCalories - calories) /
-                                    provider.goalCalories),
+                                        provider.goalCalories)
+                                    .clamp(0.0, 1.0),
                             barRadius: Radius.circular(10),
                             progressColor: Color.fromARGB(255, 255, 181, 96),
                           ),
@@ -122,7 +122,9 @@ class _CaloriesScreen extends State<CaloriesScreen> {
                                       Column(
                                         children: [
                                           Text(
-                                            '${(provider.goalCalories * 0.2) - protein}',
+                                            ((provider.goalCalories * 0.2) -
+                                                    protein)
+                                                .toStringAsFixed(2),
                                             style: TextStyle(
                                               color: Theme.of(
                                                 context,
