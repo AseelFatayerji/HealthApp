@@ -37,11 +37,11 @@ class CaloriesProvider extends ChangeNotifier {
   }
 
   Future<bool> _requestPermissions() async {
-    if (Platform.isAndroid) {
-      final status = await Permission.photos.request();
-      return status.isGranted;
+    bool granted = await Permission.camera.isGranted;
+    if (!granted) {
+      granted = await Permission.camera.request() == PermissionStatus.granted;
     }
-    return true;
+    return granted;
   }
 
   void clearImage() {
@@ -245,6 +245,7 @@ class CaloriesProvider extends ChangeNotifier {
   }
 
   Future<String> getNutrients(String prompt, String nutrient) async {
+    debugPrint("request sent");
     final query =
         "how much $nutrient is in $prompt, respond with only the number all in Kcal";
     final model = GenerativeModel(
@@ -255,6 +256,10 @@ class CaloriesProvider extends ChangeNotifier {
       final response = await model.generateContent([
         Content('user', [TextPart(query)]),
       ]);
+      final text = response.text;
+      if (text == null || double.tryParse(text) == null) {
+        print('Invalid or missing API response: $text');
+      }
       return response.text ?? "No response";
     } catch (e) {
       return "Error: $e";
@@ -262,16 +267,24 @@ class CaloriesProvider extends ChangeNotifier {
   }
 
   Future<String?> getNutrientsImage(File image, String nutrient) async {
-    final imageBytes = await selectedImage?.readAsBytes();
+    final imageBytes = await image.readAsBytes();
     final query =
         "how much $nutrient is in this image, respond with only the number all in Kcal";
-    final model = GenerativeModel(
-      model: 'gemini-2.0-flash',
-      apiKey: dotenv.env['AI_KEY']!,
-    );
-    final response = await model.generateContent([
-      Content.multi([TextPart(query), DataPart('image/jpeg', imageBytes!)]),
-    ]);
-    return (response.text);
+    try {
+      final model = GenerativeModel(
+        model: 'gemini-2.0-flash',
+        apiKey: dotenv.env['AI_KEY']!,
+      );
+      final response = await model.generateContent([
+        Content.multi([TextPart(query), DataPart('image/jpeg', imageBytes)]),
+      ]);
+      final text = response.text;
+      if (text == null || double.tryParse(text) == null) {
+        print('Invalid or missing API response: $text');
+      }
+      return response.text ?? "No response";
+    } catch (e) {
+      return "Error: $e";
+    }
   }
 }
