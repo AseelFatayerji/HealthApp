@@ -37,6 +37,7 @@ class FoodItem extends StatelessWidget {
                   Text(
                     "$name",
                     textAlign: TextAlign.left,
+                    softWrap: true,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
