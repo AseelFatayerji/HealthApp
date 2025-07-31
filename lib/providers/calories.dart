@@ -269,7 +269,7 @@ class CaloriesProvider extends ChangeNotifier {
   Future<String?> getNutrientsImage(File image, String nutrient) async {
     final imageBytes = await image.readAsBytes();
     final query =
-        "how much $nutrient is in this image, respond with only the number all in Kcal";
+        "You are a certified nutritionist and food database expert. You have access to USDA, brand-label, and standard nutrition databases. Your goal is to provide accurate nutritional values based on specific quantities, preparation methods, and ingredients. How much $nutrient is in the following image, respond with only the number in Kcal NO NEED TO SHOW ANY CALUCULATIONS OR BREAKDOWN RETURN ONLY THE NUMBER OF CALORIES";
     try {
       final model = GenerativeModel(
         model: 'gemini-2.0-flash',
