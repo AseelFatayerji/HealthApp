@@ -90,265 +90,271 @@ class _CaloriesScreen extends State<CaloriesScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Column(
-                                spacing: 20,
-                                children: [
-                                  Row(
-                                    spacing: 10,
-                                    children: [
-                                      FaIcon(
-                                        FontAwesomeIcons.drumstickBite,
-                                        color: Theme.of(
-                                          context,
-                                        ).textTheme.bodyLarge?.color,
-                                        size: 18,
-                                      ),
-                                      Text(
-                                        'Protein',
-                                        style: TextStyle(
+                              Padding(
+                                padding: EdgeInsetsGeometry.all(5),
+                                child: Column(
+                                  spacing: 20,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        FaIcon(
+                                          FontAwesomeIcons.drumstickBite,
                                           color: Theme.of(
                                             context,
-                                          ).textTheme.bodyMedium?.color,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
+                                          ).textTheme.bodyLarge?.color,
+                                          size: 18,
                                         ),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    spacing: 20,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Column(
-                                        children: [
-                                          Text(
-                                            ((provider.goalCalories * 0.2) -
-                                                    protein)
-                                                .toStringAsFixed(2),
-                                            style: TextStyle(
-                                              color: Theme.of(
-                                                context,
-                                              ).textTheme.bodyLarge?.color,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14,
-                                            ),
-                                            textAlign: TextAlign.left,
+                                        SizedBox(width:20),
+                                        Text(
+                                          'Protein',
+                                          style: TextStyle(
+                                            color: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium?.color,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
                                           ),
-                                          Text(
-                                            'Kcal',
-                                            style: TextStyle(
-                                              color: Theme.of(
-                                                context,
-                                              ).textTheme.bodySmall?.color,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 8,
+                                          textAlign: TextAlign.left,
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Column(
+                                          children: [
+                                            Text(
+                                              ((provider.goalCalories * 0.2) -
+                                                      protein)
+                                                  .toStringAsFixed(1),
+                                              style: TextStyle(
+                                                color: Theme.of(
+                                                  context,
+                                                ).textTheme.bodyLarge?.color,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                              ),
+                                              textAlign: TextAlign.left,
                                             ),
-                                            textAlign: TextAlign.left,
+                                            Text(
+                                              'Kcal',
+                                              style: TextStyle(
+                                                color: Theme.of(
+                                                  context,
+                                                ).textTheme.bodySmall?.color,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 8,
+                                              ),
+                                              textAlign: TextAlign.left,
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(width: 15),
+                                        CircularPercentIndicator(
+                                          radius: 20,
+                                          animation: true,
+                                          progressColor: Color.fromARGB(
+                                            255,
+                                            141,
+                                            201,
+                                            50,
                                           ),
-                                        ],
-                                      ),
-                                      CircularPercentIndicator(
-                                        radius: 20,
-                                        animation: true,
-                                        progressColor: Color.fromARGB(
-                                          255,
-                                          141,
-                                          201,
-                                          50,
+                                          backgroundColor: const Color.fromARGB(
+                                            255,
+                                            208,
+                                            208,
+                                            208,
+                                          ),
+                                          startAngle: 200,
+                                          circularStrokeCap:
+                                              CircularStrokeCap.round,
+                                          percent:
+                                              (protein /
+                                                      (provider.goalCalories *
+                                                          0.2))
+                                                  .clamp(0.0, 1.0),
                                         ),
-                                        backgroundColor: const Color.fromARGB(
-                                          255,
-                                          208,
-                                          208,
-                                          208,
-                                        ),
-                                        startAngle: 200,
-                                        circularStrokeCap:
-                                            CircularStrokeCap.round,
-                                        percent:
-                                            (protein /
-                                                    (provider.goalCalories *
-                                                        0.2))
-                                                .clamp(0.0, 1.0),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                              SizedBox(height: 80, width: 4),
-                              Column(
-                                spacing: 20,
-                                children: [
-                                  Row(
-                                    spacing: 20,
-                                    children: [
-                                      FaIcon(
-                                        FontAwesomeIcons.plateWheat,
-                                        color: Theme.of(
-                                          context,
-                                        ).textTheme.bodyLarge?.color,
-                                        size: 18,
-                                      ),
-                                      Text(
-                                        'Carbs',
-                                        style: TextStyle(
+                              Padding(
+                                padding: EdgeInsetsGeometry.all(5),
+                                child: Column(
+                                  spacing: 20,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        FaIcon(
+                                          FontAwesomeIcons.plateWheat,
                                           color: Theme.of(
                                             context,
-                                          ).textTheme.bodyMedium?.color,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
+                                          ).textTheme.bodyLarge?.color,
+                                          size: 18,
                                         ),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    spacing: 20,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Column(
-                                        children: [
-                                          Text(
-                                            ((provider.goalCalories * 0.6) -
-                                                    carbs)
-                                                .toStringAsFixed(2),
-                                            style: TextStyle(
-                                              color: Theme.of(
-                                                context,
-                                              ).textTheme.bodyLarge?.color,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14,
-                                            ),
-                                            textAlign: TextAlign.left,
+                                        SizedBox(width: 20),
+                                        Text(
+                                          'Carbs',
+                                          style: TextStyle(
+                                            color: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium?.color,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
                                           ),
-                                          Text(
-                                            'Kcal',
-                                            style: TextStyle(
-                                              color: Theme.of(
-                                                context,
-                                              ).textTheme.bodySmall?.color,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 8,
+                                          textAlign: TextAlign.left,
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Column(
+                                          children: [
+                                            Text(
+                                              ((provider.goalCalories * 0.6) -
+                                                      carbs)
+                                                  .toStringAsFixed(1),
+                                              style: TextStyle(
+                                                color: Theme.of(
+                                                  context,
+                                                ).textTheme.bodyLarge?.color,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                              ),
+                                              textAlign: TextAlign.left,
                                             ),
-                                            textAlign: TextAlign.left,
+                                            Text(
+                                              'Kcal',
+                                              style: TextStyle(
+                                                color: Theme.of(
+                                                  context,
+                                                ).textTheme.bodySmall?.color,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 8,
+                                              ),
+                                              textAlign: TextAlign.left,
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(width: 15),
+                                        CircularPercentIndicator(
+                                          radius: 20,
+                                          animation: true,
+                                          progressColor: Color.fromARGB(
+                                            255,
+                                            96,
+                                            178,
+                                            255,
                                           ),
-                                        ],
-                                      ),
-                                      CircularPercentIndicator(
-                                        radius: 20,
-                                        animation: true,
-                                        progressColor: Color.fromARGB(
-                                          255,
-                                          96,
-                                          178,
-                                          255,
+                                          backgroundColor: const Color.fromARGB(
+                                            255,
+                                            208,
+                                            208,
+                                            208,
+                                          ),
+                                          startAngle: 200,
+                                          circularStrokeCap:
+                                              CircularStrokeCap.round,
+                                          percent:
+                                              (carbs /
+                                                      (provider.goalCalories *
+                                                          0.6))
+                                                  .clamp(0.0, 1.0),
                                         ),
-                                        backgroundColor: const Color.fromARGB(
-                                          255,
-                                          208,
-                                          208,
-                                          208,
-                                        ),
-                                        startAngle: 200,
-                                        circularStrokeCap:
-                                            CircularStrokeCap.round,
-                                        percent:
-                                            (carbs /
-                                                    (provider.goalCalories *
-                                                        0.6))
-                                                .clamp(0.0, 1.0),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                              SizedBox(height: 80, width: 4),
-                              Column(
-                                spacing: 20,
-                                children: [
-                                  Row(
-                                    spacing: 40,
-                                    children: [
-                                      FaIcon(
-                                        FontAwesomeIcons.burger,
-                                        color: Theme.of(
-                                          context,
-                                        ).textTheme.bodyLarge?.color,
-                                        size: 18,
-                                      ),
-                                      Text(
-                                        'Fat',
-                                        style: TextStyle(
+                              Padding(
+                                padding: EdgeInsetsGeometry.all(5),
+                                child: Column(
+                                  spacing: 20,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        FaIcon(
+                                          FontAwesomeIcons.burger,
                                           color: Theme.of(
                                             context,
-                                          ).textTheme.bodyMedium?.color,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
+                                          ).textTheme.bodyLarge?.color,
+                                          size: 18,
                                         ),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    spacing: 20,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Column(
-                                        children: [
-                                          Text(
-                                            ((provider.goalCalories * 0.2) -
-                                                    fats)
-                                                .toStringAsFixed(2),
-                                            style: TextStyle(
-                                              color: Theme.of(
-                                                context,
-                                              ).textTheme.bodyLarge?.color,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14,
-                                            ),
-                                            textAlign: TextAlign.left,
+                                        SizedBox(width: 20),
+                                        Text(
+                                          'Fat',
+                                          style: TextStyle(
+                                            color: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium?.color,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
                                           ),
-                                          Text(
-                                            'Kcal',
-                                            style: TextStyle(
-                                              color: Theme.of(
-                                                context,
-                                              ).textTheme.bodySmall?.color,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 8,
+                                          textAlign: TextAlign.left,
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Column(
+                                          children: [
+                                            Text(
+                                              ((provider.goalCalories * 0.2) -
+                                                      fats)
+                                                  .toStringAsFixed(1),
+                                              style: TextStyle(
+                                                color: Theme.of(
+                                                  context,
+                                                ).textTheme.bodyLarge?.color,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                              ),
+                                              textAlign: TextAlign.left,
                                             ),
-                                            textAlign: TextAlign.left,
+                                            Text(
+                                              'Kcal',
+                                              style: TextStyle(
+                                                color: Theme.of(
+                                                  context,
+                                                ).textTheme.bodySmall?.color,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 8,
+                                              ),
+                                              textAlign: TextAlign.left,
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(width: 15),
+                                        CircularPercentIndicator(
+                                          radius: 20,
+                                          animation: true,
+                                          progressColor: Color.fromARGB(
+                                            255,
+                                            255,
+                                            181,
+                                            96,
                                           ),
-                                        ],
-                                      ),
-                                      CircularPercentIndicator(
-                                        radius: 20,
-                                        animation: true,
-                                        progressColor: Color.fromARGB(
-                                          255,
-                                          255,
-                                          181,
-                                          96,
+                                          backgroundColor: const Color.fromARGB(
+                                            255,
+                                            208,
+                                            208,
+                                            208,
+                                          ),
+                                          startAngle: 200,
+                                          circularStrokeCap:
+                                              CircularStrokeCap.round,
+                                          percent:
+                                              (fats /
+                                                      (provider.goalCalories *
+                                                          0.2))
+                                                  .clamp(0.0, 1.0),
                                         ),
-                                        backgroundColor: const Color.fromARGB(
-                                          255,
-                                          208,
-                                          208,
-                                          208,
-                                        ),
-                                        startAngle: 200,
-                                        circularStrokeCap:
-                                            CircularStrokeCap.round,
-                                        percent:
-                                            (fats /
-                                                    (provider.goalCalories *
-                                                        0.2))
-                                                .clamp(0.0, 1.0),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
