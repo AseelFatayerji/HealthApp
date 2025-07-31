@@ -545,106 +545,116 @@ class _CaloriesScreen extends State<CaloriesScreen> {
       ),
       SizedBox(
         width: 400,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          spacing: 10,
-          children: [
-            TextField(
-              controller: foodNameController,
-              decoration: InputDecoration(
-                isDense: true,
-                border: OutlineInputBorder(),
-                labelText: 'Food Name',
-                labelStyle: TextStyle(
-                  color: Theme.of(context).textTheme.bodyMedium?.color,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.6,
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              spacing: 10,
+              children: [
+                TextField(
+                  controller: foodNameController,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    border: OutlineInputBorder(),
+                    labelText: 'Food Name',
+                    labelStyle: TextStyle(
+                      color: Theme.of(context).textTheme.bodyMedium?.color,
+                    ),
+                  ),
+                  onChanged: (value) {
+                    if (value != "") {
+                      name = value;
+                    }
+                  },
                 ),
-              ),
-              onChanged: (value) {
-                if (value != "") {
-                  name = value;
-                }
-              },
-            ),
-            TextField(
-              controller: calorieController,
-              decoration: InputDecoration(
-                isDense: true,
-                border: OutlineInputBorder(),
-                labelText: 'Total Calories',
-                labelStyle: TextStyle(
-                  color: Theme.of(context).textTheme.bodyMedium?.color,
+                TextField(
+                  controller: calorieController,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    border: OutlineInputBorder(),
+                    labelText: 'Total Calories',
+                    labelStyle: TextStyle(
+                      color: Theme.of(context).textTheme.bodyMedium?.color,
+                    ),
+                  ),
+                  onChanged: (value) {
+                    if (value != "") {
+                      cal = double.parse(value);
+                    }
+                  },
                 ),
-              ),
-              onChanged: (value) {
-                if (value != "") {
-                  cal = double.parse(value);
-                }
-              },
-            ),
-            TextField(
-              controller: proteinController,
-              decoration: InputDecoration(
-                isDense: true,
-                border: OutlineInputBorder(),
-                labelText: 'Total Protein',
-                labelStyle: TextStyle(
-                  color: Theme.of(context).textTheme.bodyMedium?.color,
+                TextField(
+                  controller: proteinController,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    border: OutlineInputBorder(),
+                    labelText: 'Total Protein',
+                    labelStyle: TextStyle(
+                      color: Theme.of(context).textTheme.bodyMedium?.color,
+                    ),
+                  ),
+                  onChanged: (value) {
+                    if (value != "") {
+                      p = double.parse(value);
+                    }
+                  },
                 ),
-              ),
-              onChanged: (value) {
-                if (value != "") {
-                  p = double.parse(value);
-                }
-              },
-            ),
-            TextField(
-              controller: carbController,
-              decoration: InputDecoration(
-                isDense: true,
-                border: OutlineInputBorder(),
-                labelText: 'Total Carbs',
-                labelStyle: TextStyle(
-                  color: Theme.of(context).textTheme.bodyMedium?.color,
+                TextField(
+                  controller: carbController,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    border: OutlineInputBorder(),
+                    labelText: 'Total Carbs',
+                    labelStyle: TextStyle(
+                      color: Theme.of(context).textTheme.bodyMedium?.color,
+                    ),
+                  ),
+                  onChanged: (value) {
+                    if (value != "") {
+                      c = double.parse(value);
+                    }
+                  },
                 ),
-              ),
-              onChanged: (value) {
-                if (value != "") {
-                  c = double.parse(value);
-                }
-              },
-            ),
-            TextField(
-              controller: fatController,
-              decoration: InputDecoration(
-                isDense: true,
-                border: OutlineInputBorder(),
-                labelText: 'Total Fats',
-                labelStyle: TextStyle(
-                  color: Theme.of(context).textTheme.bodyMedium?.color,
+                TextField(
+                  controller: fatController,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    border: OutlineInputBorder(),
+                    labelText: 'Total Fats',
+                    labelStyle: TextStyle(
+                      color: Theme.of(context).textTheme.bodyMedium?.color,
+                    ),
+                  ),
+                  onChanged: (value) {
+                    if (value != "") {
+                      f = double.parse(value);
+                    }
+                  },
                 ),
-              ),
-              onChanged: (value) {
-                if (value != "") {
-                  f = double.parse(value);
-                }
-              },
-            ),
-            TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: Color.fromARGB(255, 255, 181, 96),
-                textStyle: Theme.of(context).textTheme.labelLarge,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 255, 181, 96),
+                    textStyle: Theme.of(context).textTheme.labelLarge,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: const Text(
+                    'Add',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () async {
+                    List<double> values = [cal, p, c, f];
+                    await provider.addMeal(provider.selectedDate, name, values);
+                    Navigator.of(context).pop();
+                  },
                 ),
-              ),
-              child: const Text('Add', style: TextStyle(color: Colors.white)),
-              onPressed: () async {
-                List<double> values = [cal, p, c, f];
-                await provider.addMeal(provider.selectedDate, name, values);
-                Navigator.of(context).pop();
-              },
+              ],
             ),
-          ],
+          ),
         ),
       ),
       SizedBox(
@@ -764,125 +774,102 @@ class _CaloriesScreen extends State<CaloriesScreen> {
             borderRadius: BorderRadius.circular(20),
           ),
           elevation: 5,
-          insetPadding: const EdgeInsets.all(20), // prevent stretching to edges
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              return ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxHeight: MediaQuery.of(context).size.height * 0.85,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Color.fromARGB(255, 255, 181, 96),
+                    width: 3,
+                  ),
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                child: SingleChildScrollView(
+                child: Center(
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
+                    spacing: 10,
                     children: [
                       Container(
+                        padding: EdgeInsets.only(top: 10, left: 10, right: 10),
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Color.fromARGB(255, 255, 181, 96),
-                            width: 3,
+                          color: Color.fromARGB(255, 255, 181, 96),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
                           ),
-                          borderRadius: BorderRadius.circular(20),
                         ),
-                        child: Center(
-                          child: Column(
-                            spacing: 10,
-                            children: [
-                              Container(
-                                padding: EdgeInsets.only(
-                                  top: 10,
-                                  left: 10,
-                                  right: 10,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                              width: 80,
+                              padding: EdgeInsets.all(2),
+                              decoration: BoxDecoration(
+                                color: selected == 0
+                                    ? Theme.of(context).colorScheme.surface
+                                    : Color.fromARGB(255, 255, 181, 96),
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(10),
                                 ),
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 255, 181, 96),
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    topRight: Radius.circular(10),
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Container(
-                                      width: 80,
-                                      padding: EdgeInsets.all(2),
-                                      decoration: BoxDecoration(
-                                        color: selected == 0
-                                            ? Theme.of(
-                                                context,
-                                              ).colorScheme.surface
-                                            : Color.fromARGB(255, 255, 181, 96),
-                                        borderRadius: BorderRadius.vertical(
-                                          top: Radius.circular(10),
-                                        ),
-                                      ),
-                                      child: IconButton(
-                                        onPressed: () {
-                                          selected = 0;
-                                        },
-                                        icon: FaIcon(FontAwesomeIcons.robot),
-                                      ),
-                                    ),
+                              ),
+                              child: IconButton(
+                                onPressed: () {
+                                  selected = 0;
+                                },
+                                icon: FaIcon(FontAwesomeIcons.robot),
+                              ),
+                            ),
 
-                                    Container(
-                                      width: 80,
-                                      padding: EdgeInsets.all(2),
-                                      decoration: BoxDecoration(
-                                        color: selected == 1
-                                            ? Theme.of(
-                                                context,
-                                              ).colorScheme.surface
-                                            : Color.fromARGB(255, 255, 181, 96),
-                                        borderRadius: BorderRadius.vertical(
-                                          top: Radius.circular(10),
-                                        ),
-                                      ),
-                                      child: IconButton(
-                                        onPressed: () {
-                                          selected = 1;
-                                        },
-                                        icon: Icon(Icons.text_snippet_outlined),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 80,
-                                      padding: EdgeInsets.all(2),
-                                      decoration: BoxDecoration(
-                                        color: selected == 2
-                                            ? Theme.of(
-                                                context,
-                                              ).colorScheme.surface
-                                            : Color.fromARGB(255, 255, 181, 96),
-                                        borderRadius: BorderRadius.vertical(
-                                          top: Radius.circular(10),
-                                        ),
-                                      ),
-                                      child: IconButton(
-                                        onPressed: () {
-                                          selected = 2;
-                                        },
-                                        icon: FaIcon(FontAwesomeIcons.image),
-                                      ),
-                                    ),
-                                  ],
+                            Container(
+                              width: 80,
+                              padding: EdgeInsets.all(2),
+                              decoration: BoxDecoration(
+                                color: selected == 1
+                                    ? Theme.of(context).colorScheme.surface
+                                    : Color.fromARGB(255, 255, 181, 96),
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(10),
                                 ),
                               ),
-                              Padding(
-                                padding: EdgeInsetsGeometry.all(15),
-                                child: options[selected],
+                              child: IconButton(
+                                onPressed: () {
+                                  selected = 1;
+                                },
+                                icon: Icon(Icons.text_snippet_outlined),
                               ),
-                            ],
-                          ),
+                            ),
+                            Container(
+                              width: 80,
+                              padding: EdgeInsets.all(2),
+                              decoration: BoxDecoration(
+                                color: selected == 2
+                                    ? Theme.of(context).colorScheme.surface
+                                    : Color.fromARGB(255, 255, 181, 96),
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(10),
+                                ),
+                              ),
+                              child: IconButton(
+                                onPressed: () {
+                                  selected = 2;
+                                },
+                                icon: FaIcon(FontAwesomeIcons.image),
+                              ),
+                            ),
+                          ],
                         ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsGeometry.all(15),
+                        child: options[selected],
                       ),
                     ],
                   ),
                 ),
-              );
-            },
+              ),
+            ],
           ),
         );
       },
