@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:healthapp/providers/info.dart';
+import 'package:healthapp/widgets/splash.dart';
 import 'package:provider/provider.dart';
 import 'providers/pedometer.dart';
 import 'providers/calories.dart';
 import 'providers/notification_service.dart';
-import 'widgets/navbar.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
     context.watch<InfoProvider>().load();
     return MaterialApp(
       theme: context.watch<InfoProvider>().themeData,
-      home: Navbar(),
+      home: SplashScreen(),
     );
   }
 }
