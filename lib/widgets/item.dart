@@ -18,7 +18,7 @@ class FoodItem extends StatelessWidget {
     final date = item['date'];
 
     return Container(
-      padding: EdgeInsets.symmetric(vertical:10,horizontal: 5),
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
       margin: EdgeInsets.all(5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -350,6 +350,7 @@ Future<void> _popUp(BuildContext context, provider, item) {
                       ),
                     ),
                     onPressed: () async {
+                      Navigator.of(context).pop();
                       provider.updateMeal(
                         item['name'],
                         cal,
