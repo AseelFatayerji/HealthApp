@@ -78,7 +78,8 @@ class _CaloriesScreen extends State<CaloriesScreen> {
                               context,
                             ).colorScheme.primary,
                             lineHeight: 20,
-                            percent:1-
+                            percent:
+                                1 -
                                 ((provider.goalCalories - calories) /
                                         provider.goalCalories)
                                     .clamp(0.0, 1.0),
@@ -216,7 +217,9 @@ class _CaloriesScreen extends State<CaloriesScreen> {
                                       Column(
                                         children: [
                                           Text(
-                                            '${(provider.goalCalories * 0.6) - carbs}',
+                                            ((provider.goalCalories * 0.6) -
+                                                    carbs)
+                                                .toStringAsFixed(2),
                                             style: TextStyle(
                                               color: Theme.of(
                                                 context,
@@ -308,7 +311,9 @@ class _CaloriesScreen extends State<CaloriesScreen> {
                                       Column(
                                         children: [
                                           Text(
-                                            '${(provider.goalCalories * 0.2) - fats}',
+                                            ((provider.goalCalories * 0.2) -
+                                                    fats)
+                                                .toStringAsFixed(2),
                                             style: TextStyle(
                                               color: Theme.of(
                                                 context,
