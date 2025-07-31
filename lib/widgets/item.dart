@@ -18,7 +18,7 @@ class FoodItem extends StatelessWidget {
     final date = item['date'];
 
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.symmetric(vertical:10,horizontal: 5),
       margin: EdgeInsets.all(5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -27,77 +27,88 @@ class FoodItem extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            spacing: 5,
-            children: [
-              Icon(Icons.restaurant, size: 40, color: Colors.white),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "$name",
-                    textAlign: TextAlign.left,
-                    softWrap: true,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+          Expanded(
+            child: Row(
+              children: [
+                Icon(Icons.restaurant, size: 40, color: Colors.white),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "$name",
+                      textAlign: TextAlign.left,
+                      softWrap: true,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  Row(
-                    spacing: 10,
-                    children: [
-                      Row(
-                        spacing: 5,
-                        children: [
-                          FaIcon(
-                            FontAwesomeIcons.drumstickBite,
-                            color: Colors.white,
-                            size: 14,
-                          ),
-                          Text(
-                            '$protein',
-                            style: TextStyle(color: Colors.white, fontSize: 16),
-                            textAlign: TextAlign.left,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        spacing: 5,
-                        children: [
-                          FaIcon(
-                            FontAwesomeIcons.plateWheat,
-                            color: Colors.white,
-                            size: 14,
-                          ),
-                          Text(
-                            '$carbs',
-                            style: TextStyle(color: Colors.white, fontSize: 16),
-                            textAlign: TextAlign.left,
-                          ),
-                        ],
-                      ),
-
-                      Row(
-                        spacing: 5,
-                        children: [
-                          FaIcon(
-                            FontAwesomeIcons.burger,
-                            color: Colors.white,
-                            size: 14,
-                          ),
-                          Text(
-                            '$fats',
-                            style: TextStyle(color: Colors.white, fontSize: 16),
-                            textAlign: TextAlign.left,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
+                    SizedBox(width: 5),
+                    Row(
+                      children: [
+                        Row(
+                          children: [
+                            FaIcon(
+                              FontAwesomeIcons.drumstickBite,
+                              color: Colors.white,
+                              size: 14,
+                            ),
+                            SizedBox(width: 5),
+                            Text(
+                              '$protein',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
+                              textAlign: TextAlign.left,
+                            ),
+                          ],
+                        ),
+                        SizedBox(width: 10),
+                        Row(
+                          children: [
+                            FaIcon(
+                              FontAwesomeIcons.plateWheat,
+                              color: Colors.white,
+                              size: 14,
+                            ),
+                            SizedBox(width: 5),
+                            Text(
+                              '$carbs',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
+                              textAlign: TextAlign.left,
+                            ),
+                          ],
+                        ),
+                        SizedBox(width: 10),
+                        Row(
+                          children: [
+                            FaIcon(
+                              FontAwesomeIcons.burger,
+                              color: Colors.white,
+                              size: 14,
+                            ),
+                            SizedBox(width: 5),
+                            Text(
+                              '$fats',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
+                              textAlign: TextAlign.left,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
           Row(
             children: [
@@ -181,7 +192,7 @@ Future<void> _popUp(BuildContext context, provider, item) {
                       children: [
                         Expanded(
                           child: Text(
-                            "Total Calories",
+                            "Calories",
                             style: TextStyle(fontSize: 20),
                           ),
                         ),
