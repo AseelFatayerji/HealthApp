@@ -176,14 +176,7 @@ class _CaloriesScreen extends State<CaloriesScreen> {
                                   ),
                                 ],
                               ),
-                              Container(
-                                height: 80,
-                                width: 2,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[300],
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
+                              SizedBox(height: 80, width: 4),
                               Column(
                                 spacing: 20,
                                 children: [
@@ -270,14 +263,7 @@ class _CaloriesScreen extends State<CaloriesScreen> {
                                   ),
                                 ],
                               ),
-                              Container(
-                                height: 80,
-                                width: 2,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[300],
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
+                              SizedBox(height: 80, width: 4),
                               Column(
                                 spacing: 20,
                                 children: [
