@@ -1,4 +1,4 @@
-// ignore_for_file: strict_top_level_inference
+// ignore_for_file: strict_top_level_inference, non_constant_identifier_names
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:healthapp/providers/notification_service.dart';
@@ -27,7 +27,7 @@ class PedometerProvider extends ChangeNotifier {
   double _weightKg = 67;
   double get weightKg => _weightKg;
 
-  String _heightUnit = "Kg";
+  String _heightUnit = "m";
   String get heightUnit => _heightUnit;
 
   String _distanceUnit = "Km";
