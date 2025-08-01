@@ -62,7 +62,7 @@ class CaloriesProvider extends ChangeNotifier {
       }
     } catch (e) {
       // ignore: avoid_print
-      print('Image picker failed: $e');
+      debugPrint('Image picker failed: $e');
     }
   }
 
@@ -80,7 +80,7 @@ class CaloriesProvider extends ChangeNotifier {
       }
     } catch (e) {
       // ignore: avoid_print
-      print('Image picker failed: $e');
+      debugPrint('Image picker failed: $e');
     }
   }
 
@@ -187,7 +187,6 @@ class CaloriesProvider extends ChangeNotifier {
   }
 
   Future<void> removemeal(String key, String date) async {
-    print(_mealNutrients);
     _mealNutrients.removeWhere((item) => item['key'] == key);
     await saveMealCalories(date, _mealNutrients);
     notifyListeners();
@@ -245,7 +244,7 @@ class CaloriesProvider extends ChangeNotifier {
   }
 
   Future<String> getNutrients(String prompt, String nutrient) async {
-    debugPrint("request sent");
+
     final query =
         "You are a certified nutritionist and food database expert. You use only reliable nutritional sources, including national and international food composition databases and verified brand-label information. Your task is to provide the exact amount of $nutrient in the specified food item, based on the given quantity, preparation method, and ingredients. Respond with only a single number in kilocalories (Kcal) — no units, no text, no ranges, no breakdowns, and no explanations. If multiple values exist, use the lowest reliable value. How much $nutrient is in: $prompt";
     final model = GenerativeModel(
@@ -258,7 +257,7 @@ class CaloriesProvider extends ChangeNotifier {
       ]);
       final text = response.text;
       if (text == null || double.tryParse(text) == null) {
-        print('Invalid or missing API response: $text');
+        return('Invalid or missing API response: $text');
       }
       return response.text ?? "No response";
     } catch (e) {
@@ -280,7 +279,7 @@ class CaloriesProvider extends ChangeNotifier {
       ]);
       final text = response.text;
       if (text == null || double.tryParse(text) == null) {
-        print('Invalid or missing API response: $text');
+        return('Invalid or missing API response: $text');
       }
       return response.text ?? "No response";
     } catch (e) {
