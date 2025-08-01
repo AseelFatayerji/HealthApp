@@ -3,12 +3,15 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:healthapp/providers/notification_service.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:units_converter/units_converter.dart';
 
 class PedometerProvider extends ChangeNotifier {
+  int? _initialStepCount;
+
   String _steps = '0';
   String get steps => _steps;
 
@@ -58,7 +61,8 @@ class PedometerProvider extends ChangeNotifier {
     _loadGender();
     _loadBurned();
     _loadWater();
-    loadDailySteps();
+    _loadDailySteps();
+    _loadInitialData();
     getCurrentTemperature();
   }
 
@@ -242,6 +246,7 @@ class PedometerProvider extends ChangeNotifier {
     final dateKey =
         "${_selectedDate.year}-${_selectedDate.month}-${_selectedDate.day}";
     await prefs.setInt(dateKey, _water);
+
     notifyListeners();
   }
 
@@ -265,6 +270,24 @@ class PedometerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> _loadInitialData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final formatter = DateFormat('yyyy-MM-dd');
+
+    // Load lastUpdatedDate
+    final savedDateStr = prefs.getString('lastUpdatedDate');
+    if (savedDateStr != null) {
+      _lastUpdatedDate = formatter.parse(savedDateStr);
+    }
+
+    // Load initialStepCount for today if available
+    final todayKey = formatter.format(DateTime.now());
+    final savedInitialStepCount = prefs.getInt('initialStepCount-$todayKey');
+    if (savedInitialStepCount != null) {
+      _initialStepCount = savedInitialStepCount;
+    }
+  }
+
   void onStepCountUpdated(int stepCount) {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
@@ -282,44 +305,61 @@ class PedometerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> loadDailySteps() async {
+  Future<void> _loadDailySteps() async {
     final prefs = await SharedPreferences.getInstance();
-
     final jsonString = prefs.getString('dailySteps');
+
     if (jsonString != null) {
       final Map<String, dynamic> jsonMap = jsonDecode(jsonString);
-
       dailySteps = jsonMap.map(
-        (key, value) => MapEntry(DateTime.parse(key), value as int),
+        (key, value) =>
+            MapEntry(DateFormat('yyyy-MM-dd').parse(key), value as int),
       );
     }
   }
 
   Future<void> saveDailySteps(Map<DateTime, int> dailySteps) async {
     final prefs = await SharedPreferences.getInstance();
-    final stringMap = dailySteps.map(
-      (key, value) => MapEntry(key.toIso8601String(), value),
-    );
+    final formatter = DateFormat('yyyy-MM-dd');
 
+    final stringMap = dailySteps.map(
+      (key, value) => MapEntry(formatter.format(key), value),
+    );
     prefs.setString('dailySteps', jsonEncode(stringMap));
   }
 
   Future<void> addDailySteps(int steps) async {
-    dailySteps[_selectedDate] = steps;
+    dailySteps[_selectedDate] = (dailySteps[_selectedDate] ?? 0) + steps;
     _steps = steps.toString();
     saveDailySteps(dailySteps);
     caloriesBurned(_temp);
     notifyListeners();
   }
 
-  void _onStepCount(StepCount event) {
-    final currentSteps = event.steps;
+  Future<void> _onStepCount(StepCount event) async {
+    final prefs = await SharedPreferences.getInstance();
+    final currentStepCount = event.steps;
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final formatter = DateFormat('yyyy-MM-dd');
+    final todayKey = formatter.format(today);
 
-    final today = DateTime.now();
-    final normalizedDate = DateTime(today.year, today.month, today.day);
-    dailySteps[normalizedDate] = currentSteps;
-    _steps = currentSteps.toString();
-    saveDailySteps(dailySteps);
+    if (_lastUpdatedDate == null || _lastUpdatedDate!.isBefore(today)) {
+      _initialStepCount = currentStepCount;
+      _lastUpdatedDate = today;
+      await prefs.setString('lastUpdatedDate', todayKey);
+      await prefs.setInt('initialStepCount-$todayKey', _initialStepCount!);
+    } else if (_initialStepCount == null) {
+      final saved = prefs.getInt('initialStepCount-$todayKey');
+      _initialStepCount = saved ?? currentStepCount;
+    }
+
+    final todaySteps =
+        currentStepCount - (_initialStepCount ?? currentStepCount);
+    dailySteps[today] = todaySteps;
+    _steps = todaySteps.toString();
+
+    await saveDailySteps(dailySteps);
     caloriesBurned(_temp);
     notifyListeners();
   }
