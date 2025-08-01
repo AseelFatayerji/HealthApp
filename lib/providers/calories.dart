@@ -247,7 +247,7 @@ class CaloriesProvider extends ChangeNotifier {
   Future<String> getNutrients(String prompt, String nutrient) async {
     debugPrint("request sent");
     final query =
-        "You are a certified nutritionist and food database expert. You have access to USDA, brand-label, and standard nutrition databases. Your goal is to provide accurate nutritional values based on specific quantities, preparation methods, and ingredients. How much $nutrient is in $prompt, respond with only the number in Kcal NO NEED TO SHOW ANY CALUCULATIONS OR BREAKDOWN RETURN ONLY THE NUMBER OF CALORIES and incase of range take the lower end of the spectrum";
+        "You are a certified nutritionist and food database expert. You use only reliable nutritional sources, including national and international food composition databases and verified brand-label information. Your task is to provide the exact amount of $nutrient in the specified food item, based on the given quantity, preparation method, and ingredients. Respond with only a single number in kilocalories (Kcal) — no units, no text, no ranges, no breakdowns, and no explanations. If multiple values exist, use the lowest reliable value. How much $nutrient is in: $prompt";
     final model = GenerativeModel(
       model: 'gemini-2.0-flash',
       apiKey: dotenv.env['AI_KEY']!,
@@ -269,7 +269,7 @@ class CaloriesProvider extends ChangeNotifier {
   Future<String?> getNutrientsImage(File image, String nutrient) async {
     final imageBytes = await image.readAsBytes();
     final query =
-        "You are a certified nutritionist and food database expert. You have access to USDA, brand-label, and standard nutrition databases. Your goal is to provide accurate nutritional values based on specific quantities, preparation methods, and ingredients. How much $nutrient is in the following image, respond with only the number in Kcal NO NEED TO SHOW ANY CALUCULATIONS OR BREAKDOWN RETURN ONLY THE NUMBER OF CALORIES and incase of range take the lower end of the spectrum";
+        "You are a certified nutritionist and food database expert. You use only reliable nutritional sources, including national and international food composition databases and verified brand-label information. Your task is to estimate the exact amount of $nutrient in the food item depicted in the image, based on the visible quantity, preparation method, and ingredients. Respond with only a single number in kilocalories (Kcal) — no units, no text, no ranges, no breakdowns, and no explanations. If multiple values exist, use the lowest reliable value. How much $nutrient is in the following image?";
     try {
       final model = GenerativeModel(
         model: 'gemini-2.0-flash',
