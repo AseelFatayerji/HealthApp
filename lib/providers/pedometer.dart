@@ -1,7 +1,6 @@
 // ignore_for_file: strict_top_level_inference, non_constant_identifier_names
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:healthapp/providers/notification_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:pedometer/pedometer.dart';
@@ -284,23 +283,6 @@ class PedometerProvider extends ChangeNotifier {
     if (savedInitialStepCount != null) {
       _initialStepCount = savedInitialStepCount;
     }
-  }
-
-  void onStepCountUpdated(int stepCount) {
-    final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
-
-    if (_lastUpdatedDate == null || _lastUpdatedDate!.isBefore(today)) {
-      if (_lastUpdatedDate != null) {
-        dailySteps[_lastUpdatedDate!] = int.parse(_steps);
-      }
-      _steps = '0';
-    }
-    _lastUpdatedDate = today;
-    _steps = stepCount.toString();
-    NotificationService().showNotification(_steps, ongoing: true);
-    caloriesBurned(_temp);
-    notifyListeners();
   }
 
   Future<void> _loadDailySteps() async {
