@@ -7,7 +7,7 @@ final ThemeData lightTheme = ThemeData(
     surface: Colors.grey.shade200,
   ),
   scaffoldBackgroundColor: Colors.white,
-  cardColor: Colors.grey.shade400,
+  cardColor: Colors.grey.shade500,
   splashColor: Colors.black,
   textTheme: TextTheme(
     bodySmall: TextStyle(color: Colors.grey),

@@ -41,7 +41,8 @@ class _InfoScreenState extends State<InfoScreen> {
     final provider = context.read<InfoProvider>();
     provider.toggleTheme();
   }
-    void _onToggleMetric(bool value) async {
+
+  void _onToggleMetric(bool value) async {
     final provider = context.read<PedometerProvider>();
     provider.updateDistancetUnit();
   }
@@ -71,18 +72,18 @@ class _InfoScreenState extends State<InfoScreen> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 30),
                     Text(
                       'Prefrences',
                       style: TextStyle(
-                        color: Theme.of(context).textTheme.bodyMedium?.color,
-                        fontSize: 32,
+                        color: Theme.of(context).cardColor,
+                        fontSize: 20,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 5),
                     Expanded(
                       child: LayoutBuilder(
                         builder: (context, constraints) {
@@ -98,8 +99,8 @@ class _InfoScreenState extends State<InfoScreen> {
                               ),
                               child: IntrinsicHeight(
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  spacing: 20,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  spacing: 15,
                                   children: [
                                     Row(
                                       mainAxisAlignment:
@@ -121,7 +122,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                                 color: Theme.of(
                                                   context,
                                                 ).textTheme.bodyMedium?.color,
-                                                fontSize: 20,
+                                                fontSize: 18,
                                               ),
                                             ),
                                           ],
@@ -157,7 +158,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                                 color: Theme.of(
                                                   context,
                                                 ).textTheme.bodyMedium?.color,
-                                                fontSize: 20,
+                                                fontSize: 18,
                                               ),
                                             ),
                                           ],
@@ -186,14 +187,14 @@ class _InfoScreenState extends State<InfoScreen> {
                                                 context,
                                               ).textTheme.bodyMedium?.color,
                                             ),
-                                            const SizedBox(width: 10),
+                                            const SizedBox(width: 17),
                                             Text(
                                               'US imperial',
                                               style: TextStyle(
                                                 color: Theme.of(
                                                   context,
                                                 ).textTheme.bodyMedium?.color,
-                                                fontSize: 20,
+                                                fontSize: 18,
                                               ),
                                             ),
                                           ],
@@ -212,10 +213,8 @@ class _InfoScreenState extends State<InfoScreen> {
                                     Text(
                                       'User Info',
                                       style: TextStyle(
-                                        color: Theme.of(
-                                          context,
-                                        ).textTheme.bodyMedium?.color,
-                                        fontSize: 32,
+                                        color: Theme.of(context).cardColor,
+                                        fontSize: 20,
                                         fontWeight: FontWeight.w800,
                                       ),
                                     ),
@@ -239,7 +238,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                                 color: Theme.of(
                                                   context,
                                                 ).textTheme.bodyMedium?.color,
-                                                fontSize: 20,
+                                                fontSize: 18,
                                               ),
                                             ),
                                           ],
@@ -298,7 +297,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                                 color: Theme.of(
                                                   context,
                                                 ).textTheme.bodyMedium?.color,
-                                                fontSize: 20,
+                                                fontSize: 18,
                                               ),
                                             ),
                                           ],
@@ -381,7 +380,6 @@ class _InfoScreenState extends State<InfoScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Row(
-                                          spacing: 10,
                                           children: [
                                             Icon(
                                               Icons.height_outlined,
@@ -390,13 +388,14 @@ class _InfoScreenState extends State<InfoScreen> {
                                                 context,
                                               ).textTheme.bodyMedium?.color,
                                             ),
+                                            const SizedBox(width: 10),
                                             Text(
                                               'Height',
                                               style: TextStyle(
                                                 color: Theme.of(
                                                   context,
                                                 ).textTheme.bodyMedium?.color,
-                                                fontSize: 20,
+                                                fontSize: 18,
                                               ),
                                             ),
                                           ],
@@ -482,23 +481,23 @@ class _InfoScreenState extends State<InfoScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Row(
-                                          spacing: 10,
                                           children: [
                                             Icon(
                                               Icons
                                                   .local_fire_department_outlined,
-                                              size: 28,
+                                              size: 24,
                                               color: Theme.of(
                                                 context,
                                               ).textTheme.bodyMedium?.color,
                                             ),
+                                            const SizedBox(width: 10),
                                             Text(
                                               'Daily Calories',
                                               style: TextStyle(
                                                 color: Theme.of(
                                                   context,
                                                 ).textTheme.bodyMedium?.color,
-                                                fontSize: 20,
+                                                fontSize: 18,
                                               ),
                                             ),
                                           ],
@@ -566,7 +565,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                                 color: Theme.of(
                                                   context,
                                                 ).textTheme.bodyMedium?.color,
-                                                fontSize: 20,
+                                                fontSize: 18,
                                               ),
                                             ),
                                           ],

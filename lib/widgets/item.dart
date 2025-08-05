@@ -120,7 +120,7 @@ class FoodItem extends StatelessWidget {
                   onPressed: () {
                     _popUp(context, provider, item);
                   },
-                  icon: Icon(Icons.edit),
+                  icon: Icon(Icons.edit, color: Colors.white),
                 ),
               ),
               SizedBox(
@@ -131,7 +131,7 @@ class FoodItem extends StatelessWidget {
                   onPressed: () {
                     provider.removemeal(item['key'], date);
                   },
-                  icon: Icon(Icons.delete),
+                  icon: Icon(Icons.delete, color: Colors.white),
                 ),
               ),
             ],
