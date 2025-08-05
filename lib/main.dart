@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:healthapp/providers/background_service.dart';
 import 'package:healthapp/providers/info.dart';
 import 'package:healthapp/widgets/splash.dart';
 import 'package:provider/provider.dart';
@@ -12,17 +13,24 @@ Future<void> main() async {
   await NotificationService().initNotificationService();
   await NotificationService().requestNotificationPermission();
   await dotenv.load(fileName: ".env");
-
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => CaloriesProvider()),
-        ChangeNotifierProvider(create: (_) => PedometerProvider()),
-        ChangeNotifierProvider(create: (_) => InfoProvider()),
-      ],
-      child: const MyApp(),
-    ),
-  );
+  final hasPermissions = await initializeBackgroundService();
+  if (hasPermissions) {
+    runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => CaloriesProvider()),
+          ChangeNotifierProvider(create: (_) => PedometerProvider()),
+          ChangeNotifierProvider(create: (_) => InfoProvider()),
+        ],
+      ),
+    );
+  } else {
+    runApp(
+      MaterialApp(
+        home: Scaffold(body: Center(child: Text("Permission denied."))),
+      ),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
