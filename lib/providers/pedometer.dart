@@ -54,7 +54,7 @@ class PedometerProvider extends ChangeNotifier {
   DateTime _selectedDate = DateTime.now();
 
   PedometerProvider() {
-    _init();
+    init();
     _loadGoal();
     _loadHeight();
     _loadWeight();
@@ -84,14 +84,14 @@ class PedometerProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> _init() async {
+  Future<void> init() async {
     if (!await _checkActivityRecognitionPermission()) {
       _steps = 'Unable to access step count';
       notifyListeners();
       return;
     }
     _stepCountStream = Pedometer.stepCountStream;
-    _stepCountStream?.listen(_onStepCount).onError(_onStepCountError);
+    _stepCountStream?.listen(onStepCount).onError(_onStepCountError);
   }
 
   Future<void> _loadWeight() async {
@@ -317,7 +317,7 @@ class PedometerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> _onStepCount(StepCount event) async {
+  Future<void> onStepCount(StepCount event) async {
     final prefs = await SharedPreferences.getInstance();
     final currentStepCount = event.steps;
     final now = DateTime.now();

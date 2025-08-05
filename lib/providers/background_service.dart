@@ -1,6 +1,12 @@
 import 'dart:async';
 import 'package:flutter_background/flutter_background.dart';
+import 'package:pedometer/pedometer.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:healthapp/providers/pedometer.dart';
+
+final PedometerProvider provider = PedometerProvider();
+
+StreamSubscription<StepCount>? _stepCountStream;
 
 Future<bool> initializeBackgroundService() async {
   final androidConfig = FlutterBackgroundAndroidConfig(
@@ -20,4 +26,25 @@ Future<bool> initializeBackgroundService() async {
   return permission;
 }
 
+Future<bool> startStepCounter() async {
+  bool started = await FlutterBackground.enableBackgroundExecution();
 
+  if (started) {
+    await provider.init();
+    _stepCountStream = Pedometer.stepCountStream.listen(
+      _onStepCount,
+      onError: _onStepCountError,
+      cancelOnError: true,
+    );
+  }
+
+  return started;
+}
+
+void _onStepCount(StepCount event) {
+  provider.onStepCount(event);
+}
+
+void _onStepCountError(error) {
+  print('Step count error: $error');
+}
