@@ -44,13 +44,14 @@ class NotificationService extends ChangeNotifier {
         'channel_id',
         'Pinned Notification',
         channelDescription: 'Steps walked',
-        importance: Importance.max,
-        priority: Priority.high,
+        importance: Importance.min,
+        priority: Priority.low,
         autoCancel: false,
         ongoing: ongoing,
         showWhen: false,
-        playSound: true,
+        playSound: false,
         enableVibration: false,
+        onlyAlertOnce: true,
       ),
     );
   }
