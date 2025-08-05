@@ -274,13 +274,11 @@ class PedometerProvider extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     final formatter = DateFormat('yyyy-MM-dd');
 
-    // Load lastUpdatedDate
     final savedDateStr = prefs.getString('lastUpdatedDate');
     if (savedDateStr != null) {
       _lastUpdatedDate = formatter.parse(savedDateStr);
     }
 
-    // Load initialStepCount for today if available
     final todayKey = formatter.format(DateTime.now());
     final savedInitialStepCount = prefs.getInt('initialStepCount-$todayKey');
     if (savedInitialStepCount != null) {
