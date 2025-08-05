@@ -21,3 +21,5 @@ This is a simple Health app tracker built using **Flutter**, and **Gemini**. The
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/AseelFatayerji/HealthApp.git
+2. **Quik Test**
+   A downloadable apk is available in the apk folder
