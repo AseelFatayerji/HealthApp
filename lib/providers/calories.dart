@@ -246,7 +246,7 @@ class CaloriesProvider extends ChangeNotifier {
   Future<String> getNutrients(String prompt, String nutrient) async {
 
     final query =
-        "You are a certified nutritionist and food database expert. You use only reliable nutritional sources, including national and international food composition databases and verified brand-label information. Your task is to provide the exact amount of $nutrient in the specified food item, based on the given quantity, preparation method, and ingredients. Respond with only a single number in kilocalories (Kcal) — no units, no text, no ranges, no breakdowns, and no explanations. If multiple values exist, use the lowest reliable value. How much $nutrient is in: $prompt";
+        "You are a certified nutritionist and food database expert. You use only reliable nutritional sources, including national and international food composition databases and verified brand-label information. Your task is to provide the exact amount of $nutrient in the specified food item, based on the given quantity, preparation method, and ingredients. Respond with only a single number in kilocalories (Kcal) — no units, no text, no ranges, no breakdowns, and no explanations. If multiple values exist, use the average of those reliable values. How much $nutrient is in: $prompt";
     final model = GenerativeModel(
       model: 'gemini-2.0-flash',
       apiKey: dotenv.env['AI_KEY']!,
