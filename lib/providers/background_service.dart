@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter_background/flutter_background.dart';
-import 'package:healthapp/providers/notification_service.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -15,9 +14,7 @@ Future<bool> initializeBackgroundService() async {
     enableWifiLock: false,
   );
 
-  bool permission = await FlutterBackground.initialize(
-    androidConfig: androidConfig,
-  );
+  bool permission = await FlutterBackground.initialize(androidConfig: androidConfig);
 
   if (permission) {
     var status = await Permission.activityRecognition.request();
@@ -48,12 +45,9 @@ Future<void> stopStepCounter() async {
 
 void _onStepCount(StepCount event) {
   _currentSteps = event.steps;
-  if (NotificationService().isInitialized) {
-    NotificationService().showNotification(_currentSteps.toString());
-  }
+ 
 }
 
-// ignore: strict_top_level_inference
 void _onStepCountError(error) {
   print('Step count error: $error');
 }

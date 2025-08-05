@@ -22,6 +22,7 @@ Future<void> main() async {
           ChangeNotifierProvider(create: (_) => PedometerProvider()),
           ChangeNotifierProvider(create: (_) => InfoProvider()),
         ],
+        child: MyApp(),
       ),
     );
   } else {

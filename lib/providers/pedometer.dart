@@ -1,6 +1,7 @@
 // ignore_for_file: strict_top_level_inference, non_constant_identifier_names
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:healthapp/providers/notification_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:pedometer/pedometer.dart';
@@ -338,7 +339,7 @@ class PedometerProvider extends ChangeNotifier {
         currentStepCount - (_initialStepCount ?? currentStepCount);
     dailySteps[today] = todaySteps;
     _steps = todaySteps.toString();
-
+    NotificationService().showNotification(_steps);
     await saveDailySteps(dailySteps);
     caloriesBurned(_temp);
     notifyListeners();
