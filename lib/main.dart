@@ -26,11 +26,7 @@ Future<void> main() async {
       ),
     );
   } else {
-    runApp(
-      MaterialApp(
-        home: Scaffold(body: Center(child: Text("Permission denied."))),
-      ),
-    );
+    runApp(MaterialApp(home: SplashScreen()));
   }
 }
 
