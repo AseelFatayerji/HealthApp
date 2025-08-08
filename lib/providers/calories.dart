@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -216,17 +217,27 @@ class CaloriesProvider extends ChangeNotifier {
   }
 
   Future<List<double>> getTextResponse(String prompt) async {
-    Future<double> parseNutrient(String nutrient) async {
-      final result = await getNutrients(prompt, nutrient);
-      return double.tryParse(result) ?? 0.0;
-    }
+    final query = "https://api.calorieninjas.com/v1/nutrition?query=$prompt";
+    final headers = {'X-Api-Key': dotenv.env['CALORIE_API_KEY']!};
+    double calories = 0.0;
+    double protein = 0.0;
+    double carbs = 0.0;
+    double fat = 0.0;
+    try {
+      final response = await http.get(Uri.parse(query), headers: headers);
+      final data = jsonDecode(response.body)['items'];
 
-    return Future.wait([
-      parseNutrient("calories"),
-      parseNutrient("protein"),
-      parseNutrient("carbs"),
-      parseNutrient("fats"),
-    ]);
+      for (var item in data) {
+        calories += item['calories'] ?? 0.0;
+        protein += item['protein_g'] ?? 0.0;
+        carbs += item['carbohydrates_total_g'] ?? 0.0;
+        fat += item['fat_total_g'] ?? 0.0;
+      }
+      return [calories.roundToDouble(), protein.roundToDouble()*4, carbs.roundToDouble()*4, fat.roundToDouble()*9];
+    } catch (e) {
+      print('Error fetching data: $e');
+      return [calories, protein, carbs, fat];
+    }
   }
 
   Future<List<double>> getImageResponse(File? image) async {
@@ -243,28 +254,6 @@ class CaloriesProvider extends ChangeNotifier {
     ]);
   }
 
-  Future<String> getNutrients(String prompt, String nutrient) async {
-
-    final query =
-        "You are a certified nutritionist and food database expert. You use only reliable nutritional sources, including national and international food composition databases and verified brand-label information. Your task is to provide the exact amount of $nutrient in the specified food item, based on the given quantity, preparation method, and ingredients. Respond with only a single number in kilocalories (Kcal) — no units, no text, no ranges, no breakdowns, and no explanations. If multiple values exist, use the average of those reliable values. How much $nutrient is in: $prompt";
-    final model = GenerativeModel(
-      model: 'gemini-2.0-flash',
-      apiKey: dotenv.env['AI_KEY']!,
-    );
-    try {
-      final response = await model.generateContent([
-        Content('user', [TextPart(query)]),
-      ]);
-      final text = response.text;
-      if (text == null || double.tryParse(text) == null) {
-        return('Invalid or missing API response: $text');
-      }
-      return response.text ?? "No response";
-    } catch (e) {
-      return "Error: $e";
-    }
-  }
-
   Future<String?> getNutrientsImage(File image, String nutrient) async {
     final imageBytes = await image.readAsBytes();
     final query =
@@ -279,7 +268,7 @@ class CaloriesProvider extends ChangeNotifier {
       ]);
       final text = response.text;
       if (text == null || double.tryParse(text) == null) {
-        return('Invalid or missing API response: $text');
+        return ('Invalid or missing API response: $text');
       }
       return response.text ?? "No response";
     } catch (e) {

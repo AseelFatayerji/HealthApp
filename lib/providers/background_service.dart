@@ -6,6 +6,7 @@ import 'package:healthapp/providers/pedometer.dart';
 
 final PedometerProvider provider = PedometerProvider();
 
+// ignore: unused_element
 StreamSubscription<StepCount>? _stepCountStream;
 
 Future<bool> initializeBackgroundService() async {
@@ -45,6 +46,7 @@ void _onStepCount(StepCount event) {
   provider.onStepCount(event);
 }
 
+// ignore: strict_top_level_inference
 void _onStepCountError(error) {
   print('Step count error: $error');
 }
