@@ -163,6 +163,18 @@ class CaloriesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // void _updatePreferences() async {
+  //   final currentMeals = await loadMealCalories(_formatDate(_selectedDate));
+  //   for (var meal in currentMeals) {
+  //     meal['protein'] = double.tryParse(meal['protein'].toStringAsFixed(1)) ?? 0.0;
+  //     meal['carbs'] = double.tryParse(meal['carbs'].toStringAsFixed(1)) ?? 0.0;
+  //     meal['fats'] = double.tryParse(meal['fats'].toStringAsFixed(1)) ?? 0.0;
+  //   }
+  //   _mealNutrients = currentMeals;
+  //   await saveMealCalories(_formatDate(_selectedDate), currentMeals);
+  //   notifyListeners();
+  // }
+
   Future<void> addMeal(
     DateTime date,
     String foodName,
@@ -186,7 +198,7 @@ class CaloriesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> removemeal(String key, String date) async {
+  Future<void> removeMeal(String key, String date) async {
     _mealNutrients.removeWhere((item) => item['key'] == key);
     await saveMealCalories(date, _mealNutrients);
     notifyListeners();
@@ -210,34 +222,12 @@ class CaloriesProvider extends ChangeNotifier {
   }
 
   void updateSelectedDate(DateTime date) {
-    _selectedDate = DateTime(date.year, date.month, date.day);
+    _selectedDate = DateTime(date.year, date.month, date.day);    
+    // _updatePreferences();
     _loadForSelectedDate();
     notifyListeners();
   }
 
-  // Future<List<double>> getTextResponse(String prompt) async {
-  //   final query = "https://api.calorieninjas.com/v1/nutrition?query=$prompt";
-  //   final headers = {'X-Api-Key': dotenv.env['CALORIE_API_KEY']!};
-  //   double calories = 0.0;
-  //   double protein = 0.0;
-  //   double carbs = 0.0;
-  //   double fat = 0.0;
-  //   try {
-  //     final response = await http.get(Uri.parse(query), headers: headers);
-  //     final data = jsonDecode(response.body)['items'];
-
-  //     for (var item in data) {
-  //       calories += item['calories'] ?? 0.0;
-  //       protein += item['protein_g'] ?? 0.0;
-  //       carbs += item['carbohydrates_total_g'] ?? 0.0;
-  //       fat += item['fat_total_g'] ?? 0.0;
-  //     }
-  //     return [calories.roundToDouble(), protein.roundToDouble()*4, carbs.roundToDouble()*4, fat.roundToDouble()*9];
-  //   } catch (e) {
-  //     print('Error fetching data: $e');
-  //     return [calories, protein, carbs, fat];
-  //   }
-  // }
   Future<List<double>> getTextResponse(String prompt) async {
     Future<String?> parseNutrient(String nutrient) async {
       final result = await getNutrientsPropmt(prompt, nutrient);

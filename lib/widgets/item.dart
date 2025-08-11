@@ -129,7 +129,7 @@ class FoodItem extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   constraints: BoxConstraints(),
                   onPressed: () {
-                    provider.removemeal(item['key'], date);
+                    provider.removeMeal(item['key'], date);
                   },
                   icon: Icon(Icons.delete, color: Colors.white),
                 ),
