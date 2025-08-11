@@ -245,7 +245,7 @@ Future<void> _popUp(BuildContext context, provider, item) {
                                 horizontal: 4,
                               ),
                               border: OutlineInputBorder(),
-                              hintText: '${item['protein']} Kcal',
+                              hintText: '${item['protein']} g',
                               hintStyle: TextStyle(
                                 color: Theme.of(
                                   context,
@@ -280,7 +280,7 @@ Future<void> _popUp(BuildContext context, provider, item) {
                                 horizontal: 4,
                               ),
                               border: OutlineInputBorder(),
-                              hintText: '${item['carbs']} Kcal',
+                              hintText: '${item['carbs']} g',
                               hintStyle: TextStyle(
                                 color: Theme.of(
                                   context,
@@ -315,7 +315,7 @@ Future<void> _popUp(BuildContext context, provider, item) {
                                 horizontal: 4,
                               ),
                               border: OutlineInputBorder(),
-                              hintText: '${item['fats']} Kcal',
+                              hintText: '${item['fats']} g',
                               hintStyle: TextStyle(
                                 color: Theme.of(
                                   context,

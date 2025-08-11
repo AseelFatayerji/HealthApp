@@ -104,7 +104,7 @@ class _CaloriesScreen extends State<CaloriesScreen> {
                                           ).textTheme.bodyLarge?.color,
                                           size: 18,
                                         ),
-                                        SizedBox(width:20),
+                                        SizedBox(width: 20),
                                         Text(
                                           'Protein',
                                           style: TextStyle(
@@ -123,7 +123,8 @@ class _CaloriesScreen extends State<CaloriesScreen> {
                                         Column(
                                           children: [
                                             Text(
-                                              ((provider.goalCalories * 0.2) -
+                                              (((provider.goalCalories * 0.2) /
+                                                          4) -
                                                       protein)
                                                   .toStringAsFixed(1),
                                               style: TextStyle(
@@ -136,7 +137,7 @@ class _CaloriesScreen extends State<CaloriesScreen> {
                                               textAlign: TextAlign.left,
                                             ),
                                             Text(
-                                              'Kcal',
+                                              'grams',
                                               style: TextStyle(
                                                 color: Theme.of(
                                                   context,
@@ -169,8 +170,9 @@ class _CaloriesScreen extends State<CaloriesScreen> {
                                               CircularStrokeCap.round,
                                           percent:
                                               (protein /
-                                                      (provider.goalCalories *
-                                                          0.2))
+                                                      ((provider.goalCalories *
+                                                              0.2) /
+                                                          4))
                                                   .clamp(0.0, 1.0),
                                         ),
                                       ],
@@ -211,7 +213,8 @@ class _CaloriesScreen extends State<CaloriesScreen> {
                                         Column(
                                           children: [
                                             Text(
-                                              ((provider.goalCalories * 0.6) -
+                                              (((provider.goalCalories * 0.6) /
+                                                          4) -
                                                       carbs)
                                                   .toStringAsFixed(1),
                                               style: TextStyle(
@@ -224,7 +227,7 @@ class _CaloriesScreen extends State<CaloriesScreen> {
                                               textAlign: TextAlign.left,
                                             ),
                                             Text(
-                                              'Kcal',
+                                              'grams',
                                               style: TextStyle(
                                                 color: Theme.of(
                                                   context,
@@ -257,8 +260,9 @@ class _CaloriesScreen extends State<CaloriesScreen> {
                                               CircularStrokeCap.round,
                                           percent:
                                               (carbs /
-                                                      (provider.goalCalories *
-                                                          0.6))
+                                                      ((provider.goalCalories *
+                                                              0.6) /
+                                                          4))
                                                   .clamp(0.0, 1.0),
                                         ),
                                       ],
@@ -301,7 +305,8 @@ class _CaloriesScreen extends State<CaloriesScreen> {
                                         Column(
                                           children: [
                                             Text(
-                                              ((provider.goalCalories * 0.2) -
+                                              (((provider.goalCalories * 0.2) /
+                                                          4) -
                                                       fats)
                                                   .toStringAsFixed(1),
                                               style: TextStyle(
@@ -314,7 +319,7 @@ class _CaloriesScreen extends State<CaloriesScreen> {
                                               textAlign: TextAlign.left,
                                             ),
                                             Text(
-                                              'Kcal',
+                                              'grams',
                                               style: TextStyle(
                                                 color: Theme.of(
                                                   context,
@@ -347,8 +352,9 @@ class _CaloriesScreen extends State<CaloriesScreen> {
                                               CircularStrokeCap.round,
                                           percent:
                                               (fats /
-                                                      (provider.goalCalories *
-                                                          0.2))
+                                                      ((provider.goalCalories *
+                                                              0.2) /
+                                                          4))
                                                   .clamp(0.0, 1.0),
                                         ),
                                       ],

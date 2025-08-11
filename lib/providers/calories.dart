@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
-import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -216,28 +215,45 @@ class CaloriesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<double>> getTextResponse(String prompt) async {
-    final query = "https://api.calorieninjas.com/v1/nutrition?query=$prompt";
-    final headers = {'X-Api-Key': dotenv.env['CALORIE_API_KEY']!};
-    double calories = 0.0;
-    double protein = 0.0;
-    double carbs = 0.0;
-    double fat = 0.0;
-    try {
-      final response = await http.get(Uri.parse(query), headers: headers);
-      final data = jsonDecode(response.body)['items'];
+  // Future<List<double>> getTextResponse(String prompt) async {
+  //   final query = "https://api.calorieninjas.com/v1/nutrition?query=$prompt";
+  //   final headers = {'X-Api-Key': dotenv.env['CALORIE_API_KEY']!};
+  //   double calories = 0.0;
+  //   double protein = 0.0;
+  //   double carbs = 0.0;
+  //   double fat = 0.0;
+  //   try {
+  //     final response = await http.get(Uri.parse(query), headers: headers);
+  //     final data = jsonDecode(response.body)['items'];
 
-      for (var item in data) {
-        calories += item['calories'] ?? 0.0;
-        protein += item['protein_g'] ?? 0.0;
-        carbs += item['carbohydrates_total_g'] ?? 0.0;
-        fat += item['fat_total_g'] ?? 0.0;
-      }
-      return [calories.roundToDouble(), protein.roundToDouble()*4, carbs.roundToDouble()*4, fat.roundToDouble()*9];
-    } catch (e) {
-      print('Error fetching data: $e');
-      return [calories, protein, carbs, fat];
+  //     for (var item in data) {
+  //       calories += item['calories'] ?? 0.0;
+  //       protein += item['protein_g'] ?? 0.0;
+  //       carbs += item['carbohydrates_total_g'] ?? 0.0;
+  //       fat += item['fat_total_g'] ?? 0.0;
+  //     }
+  //     return [calories.roundToDouble(), protein.roundToDouble()*4, carbs.roundToDouble()*4, fat.roundToDouble()*9];
+  //   } catch (e) {
+  //     print('Error fetching data: $e');
+  //     return [calories, protein, carbs, fat];
+  //   }
+  // }
+  Future<List<double>> getTextResponse(String prompt) async {
+    Future<String?> parseNutrient(String nutrient) async {
+      final result = await getNutrientsPropmt(prompt, nutrient);
+      return result;
     }
+
+    final results = await Future.wait([
+      parseNutrient("calories"),
+      parseNutrient("protein"),
+      parseNutrient("carbs"),
+      parseNutrient("fats"),
+    ]);
+
+    return results
+        .map((result) => double.tryParse(result ?? '0.0') ?? 0.0)
+        .toList();
   }
 
   Future<List<double>> getImageResponse(File? image) async {
@@ -254,17 +270,45 @@ class CaloriesProvider extends ChangeNotifier {
     ]);
   }
 
-  Future<String?> getNutrientsImage(File image, String nutrient) async {
-    final imageBytes = await image.readAsBytes();
+  Future<String?> getNutrientsPropmt(String prompt, String nutrient) async {
     final query =
-        "You are a certified nutritionist and food database expert. You use only reliable nutritional sources, including national and international food composition databases and verified brand-label information. Your task is to estimate the exact amount of $nutrient in the food item depicted in the image, based on the visible quantity, preparation method, and ingredients. Respond with only a single number in kilocalories (Kcal) — no units, no text, no ranges, no breakdowns, and no explanations. If multiple values exist, use the lowest reliable value. How much $nutrient is in the following image?";
+        "You are a certified nutritionist and food database expert. Use only reliable nutritional sources, including official food composition databases and verified brand-label data. Estimate the amount of $nutrient in grams (g) in the described food item, based on typical portion sizes, preparation methods, and ingredients. If details are missing, make reasonable, realistic assumptions based on common recipes and serving sizes. Respond with only a single number — no units, no words, no ranges, no breakdowns, and no explanations. If multiple values exist, choose the lowest credible estimate. How much $nutrient is in $prompt?";
+    final queryC =
+        "You are a certified nutritionist and food database expert. Use only reliable nutritional sources, including official food composition databases and verified brand-label data. Estimate the total calories in kilocalories (Kcal) for the described food item, based on typical portion sizes, preparation methods, and ingredients. If details are missing, make reasonable, realistic assumptions based on common recipes and serving sizes. Respond with only a single number — no units, no words, no ranges, no breakdowns, and no explanations. If multiple values exist, choose the lowest credible estimate. How many kilocalories are in $prompt?";
     try {
       final model = GenerativeModel(
         model: 'gemini-2.0-flash',
         apiKey: dotenv.env['AI_KEY']!,
       );
       final response = await model.generateContent([
-        Content.multi([TextPart(query), DataPart('image/jpeg', imageBytes)]),
+        Content.text(nutrient == "calories" ? queryC : query),
+      ]);
+      final text = response.text;
+      if (text == null || double.tryParse(text) == null) {
+        return ('Invalid or missing API response: $text');
+      }
+      return response.text ?? "No response";
+    } catch (e) {
+      return "Error: $e";
+    }
+  }
+
+  Future<String?> getNutrientsImage(File image, String nutrient) async {
+    final imageBytes = await image.readAsBytes();
+    final queryC =
+        "You are a certified nutritionist and food database expert. Use only reliable nutritional sources, including official food composition databases and verified brand-label data. Estimate the total calories in kilocalories (Kcal) for the food item depicted in the image, based on the visible quantity, preparation method, and ingredients. If details are missing, make reasonable, realistic assumptions based on common recipes and serving sizes. Respond with only a single number — no units, no words, no ranges, no breakdowns, and no explanations. If multiple values exist, choose the lowest credible estimate. How many kilocalories are in the following image?";
+    final query =
+        "You are a certified nutritionist and food database expert. Use only reliable nutritional sources, including official food composition databases and verified brand-label data. Estimate the amount of $nutrient in grams (g) in the food item depicted in the image, based on the visible quantity, preparation method, and ingredients. If details are missing, make reasonable, realistic assumptions based on common recipes and serving sizes. Respond with only a single number — no units, no words, no ranges, no breakdowns, and no explanations. If multiple values exist, choose the lowest credible estimate. How many grams of $nutrient are in the following image?";
+    try {
+      final model = GenerativeModel(
+        model: 'gemini-2.0-flash',
+        apiKey: dotenv.env['AI_KEY']!,
+      );
+      final response = await model.generateContent([
+        Content.multi([
+          TextPart(nutrient == "calories" ? queryC : query),
+          DataPart('image/jpeg', imageBytes),
+        ]),
       ]);
       final text = response.text;
       if (text == null || double.tryParse(text) == null) {
